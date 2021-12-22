@@ -21,7 +21,7 @@ export default defineStore({
   },
   actions: {
     changeTitle() {
-      this.title = 'vue3+vite+ts！'
+      this.title = 'vue3+vite+pinia+ts！'
     }
   }
 })
