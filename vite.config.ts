@@ -2,18 +2,23 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import colors from 'colors-console'
+import legacy from '@vitejs/plugin-legacy'
 
 const resolvePath = (path) => resolve(__dirname, path)
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // 可以根据不同环境自定义配置
   console.log(colors('cyan', '<<<<<<<<<< VITE_ENV >>>>>>>>>> '), colors('yellow', mode))
-
+  // 可以根据不同环境自定义配置
   const IS_PROD = mode === 'production'
 
   return {
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      })
+    ],
     resolve: {
       alias: {
         '@': resolvePath('src'),
@@ -36,12 +41,12 @@ export default defineConfig(({ mode }) => {
     // },
     // 构建时配置
     build: {
-      // 正式环境关闭 sourcemap，测试环境开启
+      // 非生产环境生成 sourcemap
       sourcemap: !IS_PROD,
       terserOptions: {
         compress: {
-          // 去除 console、debugger
-          drop_console: true,
+          // 生产环境去除 console、debugger
+          drop_console: IS_PROD,
           drop_debugger: true
         }
       }
