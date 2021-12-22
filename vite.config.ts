@@ -24,16 +24,16 @@ export default defineConfig(({ mode }) => {
       }
     },
     // 开发服务器配置
-    server: {
-      // 代理配置
-      proxy: {
-        '^/api': {
-          target: 'https://www.kuaidi100.com',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        }
-      }
-    },
+    // server: {
+    //   // 代理配置
+    //   proxy: {
+    //     '^/api': {
+    //       target: 'https://www.kuaidi100.com',
+    //       changeOrigin: true,
+    //       rewrite: (path) => path.replace(/^\/api/, '')
+    //     }
+    //   }
+    // },
     // 构建时配置
     build: {
       // 正式环境关闭 sourcemap，测试环境开启

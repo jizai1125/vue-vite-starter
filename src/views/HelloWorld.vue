@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getList } from 'api/index'
 import useAppStore from '@/store'
 import { storeToRefs } from 'pinia'
 
@@ -7,9 +6,6 @@ const store = useAppStore()
 // 解构会失去响应，可以用 storeToRefs 包裹，类似 vue 的 toRefs
 const { title, user } = storeToRefs(store)
 
-getList().then((res) => {
-  console.log('getList result', res)
-})
 const changName = (name: string) => {
   store.user.username = name
 }
