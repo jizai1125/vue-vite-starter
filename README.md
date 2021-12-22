@@ -13,8 +13,8 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 ## 分支说明
 
 - [main](https://github.com/jizai1125/vue3-vite2-ts-template/tree/main)：基础配置
-- [h5 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/h5)：在 [main](https://github.com/jizai1125/vue3-vite2-ts-template/tree/main) 分支基础配置上集成 h5 移动端相关的配置
-- [admin 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/admin)：在 [main](https://github.com/jizai1125/vue3-vite2-ts-template/tree/main) 分支基础配置上集成管理台相关的配置
+- [h5 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/h5)：在基础配置上集成 h5 移动端相关的配置
+- [admin 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/admin)：在基础配置上集成管理台相关的配置
 
 ## main 分支集成说明
 
