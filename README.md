@@ -30,6 +30,10 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 - [vue-vite-starter 基础搭建文档](https://jizai-.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
 
+**相关文档：**
+
+- [vue3-vite2-ts-template 基础搭建文档](https://jizai.notion.site/vue3-vite-ts-template-7f2ee6363e2649ae996418819b9df8ea)
+
 ## h5 分支集成说明
 
 除了 [main 分支集成](https://github.com/jizai1125/vue3-vite2-ts-template#main-分支集成说明) 外，还有集成以下
