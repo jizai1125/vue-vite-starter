@@ -14,21 +14,29 @@
 - 浏览器兼容性
 - todo...
 
+**相关文档：**
+
+- [vue3-vite2-ts-template 基础搭建文档](https://jizai.notion.site/vue3-vite-ts-template-7f2ee6363e2649ae996418819b9df8ea)
+
 ## h5 分支集成说明
 
 - 移动端组件库 [vant 组件库](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/quickstart)
 
 - 移动端适配方案采用 viewport 布局，使用插件 [postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport)
 
-  > 将px单位转换为视口单位的 (vw, vh, vmin, vmax) 的 [PostCSS](https://github.com/postcss/postcss) 插件.
+  > 将px单位转换为视口单位的 (vw, vh, vmin, vmax) 的 [PostCSS](https://github.com/postcss/postcss) 插件
+
+**相关文档：**
+
+- [vue3-vite2-ts-template 【H5 分支文档】](https://jizai.notion.site/vue3-vite2-ts-template-H5-cab6338aeab845e49a5510b3875beca9)
 
 ## admin 分支集成说明
 
 - todo...
 
-## 脚手架搭建步骤
+**相关文档：**
 
-[vue3-vite2-ts-template 脚手架搭建](https://jizai.notion.site/vue3-vite-ts-template-7f2ee6363e2649ae996418819b9df8ea)
+- [vue3-vite2-ts-template 【admin 分支文档】](https://jizai.notion.site/vue3-vite2-ts-template-admin-2dfa34c941bf48cabcc56c129f2ff612)
 
 ## 推荐开发工具
 
