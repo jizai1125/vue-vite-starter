@@ -24,7 +24,7 @@ const changeUserData = (user: object) => {
 
 <template>
   <!-- <img alt="Vue logo" src="@/assets/logo.png" /> -->
-  <img alt="Vue logo" :src="resolveAssetFile('logo.png')" />
+  <img alt="Vue logo" :src="resolveAssetFile('logo.svg')" style="width: 100px" />
   <h1>{{ title }}</h1>
   <p>name: {{ user.username }} | role: {{ store.userRole }}</p>
   <button @click="store.changeTitle">store action changeTitle</button>
