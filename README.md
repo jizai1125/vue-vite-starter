@@ -8,7 +8,7 @@
 
 ## 基础版集成说明
 
-- 技术栈：[vue 3.x](https://v3.cn.vuejs.org/guide/introduction.html)、[vite 2.x](https://cn.vitejs.dev/guide/)、[pinia 2.x](https://pinia.vuejs.org/introduction.html)、[Vue Router 4.x](https://next.router.vuejs.org/zh/introduction.html)、[TypeScript ](https://www.typescriptlang.org/)等
+- 技术栈：[vue 3](https://v3.cn.vuejs.org/guide/introduction.html)、[vite 2](https://cn.vitejs.dev/guide/)、[pinia 2](https://pinia.vuejs.org/introduction.html)、[Vue Router 4](https://next.router.vuejs.org/zh/introduction.html)、[TypeScript ](https://www.typescriptlang.org/)等
 - 代码风格检查约束：ESLint + Prettier、husky + lint-staged
 - 环境相关配置
 - 浏览器兼容性
