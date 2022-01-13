@@ -13,11 +13,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "api/*": ["src/api/*"],
-      "components/*": ["src/components/*"],
-      "views/*": ["src/views/*"],
-      "utils/*": ["src/utils/*"]
+      "*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["types/**/*.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

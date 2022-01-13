@@ -1,8 +1,7 @@
-import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios'
-import { getToken } from '@/utils/auth'
+import axios, { AxiosRequestConfig, Method } from 'axios'
+import { getToken } from 'utils/auth'
 
 const baseURL = import.meta.env.VITE_API_URL
-
 // 创建实例
 const service = axios.create({
   baseURL, // url = base api url + request url
@@ -32,7 +31,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const resData = response.data
-    // 根绝业务自定义
+    // 自定义
     // if (resData?.status !== 200) {
     //   if (resData.status === 401) {
     //     // 登录超时,重新登录

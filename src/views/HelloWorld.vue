@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useAppStore from '@/store'
 import { storeToRefs } from 'pinia'
+import { resolveAssetFile } from 'utils'
 
 const store = useAppStore()
 // 解构会失去响应，可以用 storeToRefs 包裹，类似 vue 的 toRefs
@@ -22,6 +23,8 @@ const changeUserData = (user: object) => {
 </script>
 
 <template>
+  <!-- <img alt="Vue logo" src="@/assets/logo.png" /> -->
+  <img alt="Vue logo" :src="resolveAssetFile('logo.png')" />
   <h1>{{ title }}</h1>
   <p>name: {{ user.username }} | role: {{ store.userRole }}</p>
   <button @click="store.changeTitle">store action changeTitle</button>
