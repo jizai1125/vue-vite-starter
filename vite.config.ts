@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import colors from 'colors-console'
 import legacy from '@vitejs/plugin-legacy'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 const resolvePath = (path) => resolve(__dirname, path)
 
@@ -49,6 +50,10 @@ export default defineConfig(({ mode }) => {
           drop_console: IS_PROD,
           drop_debugger: true
         }
+      },
+      // Rollup 打包配置
+      rollupOptions: {
+        plugins: [visualizer({ open: true, gzipSize: true })]
       }
     }
   }
