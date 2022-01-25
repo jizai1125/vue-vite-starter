@@ -1,9 +1,11 @@
-import axios, { AxiosRequestConfig, Method } from 'axios'
+import axios from 'axios'
+import type { AxiosRequestConfig, Method } from 'axios'
 import { getToken } from 'utils/auth'
 
 const baseURL = import.meta.env.VITE_API_URL
+
 // 创建实例
-const service = axios.create({
+export const service = axios.create({
   baseURL, // url = base api url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 6000
@@ -46,36 +48,31 @@ service.interceptors.response.use(
   }
 )
 
-function fetch(method: Method, url: string, params?: unknown, config?: AxiosRequestConfig) {
+type ExtMethod = Extract<Method, 'get' | 'post' | 'put' | 'delete'>
+
+function request<R>(method: ExtMethod, url: string, params?: unknown, config?: AxiosRequestConfig) {
   let result
   switch (method) {
     case 'get':
-      result = service.get(url, {
+      result = service.get<R, R>(url, {
         params,
         ...config
       })
       break
     case 'post':
-      result = service.post(url, params, config)
+      result = service.post<R, R>(url, params, config)
       break
     case 'put':
-      result = service.put(url, params, config)
+      result = service.put<R, R>(url, params, config)
       break
     case 'delete':
-      result = service.delete(url, {
+      result = service.delete<R, R>(url, {
         params,
-        ...config
-      })
-      break
-    default:
-      result = service({
-        method,
-        url,
         ...config
       })
       break
   }
   return result
 }
-export default fetch
-export const request = service
+
+export default request

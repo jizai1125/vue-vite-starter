@@ -12,7 +12,9 @@
 - 代码风格检查约束：ESLint + Prettier、husky + lint-staged
 - 环境相关配置
 - 浏览器兼容性
-- todo...
+- 打包分析：rollup-plugin-visualizer 插件
+- svg 图片：SvgIcon 组件、vite-plugin-svg-icons 插件
+- ...
 
 **相关文档：**
 

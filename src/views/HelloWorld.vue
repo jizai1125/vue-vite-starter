@@ -3,6 +3,11 @@ import useAppStore from '@/store'
 import { storeToRefs } from 'pinia'
 import { resolveAssetFile } from 'utils'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import { getList } from '@/api'
+
+getList().then((res) => {
+  console.log(res, res.com)
+})
 
 const store = useAppStore()
 // 解构会失去响应，可以用 storeToRefs 包裹，类似 vue 的 toRefs
