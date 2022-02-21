@@ -1,3 +1,8 @@
-import fetch from '@/utils/request'
+import request from 'utils/request'
+import { ExpressData } from './resType'
 
-export const getList = () => fetch('get', '/query?type=shunfeng&postid=SF6091240032008')
+export const getList = () =>
+  request<ExpressData>('get', '/query', {
+    type: 'shunfeng',
+    postid: 'SF6091240032008'
+  })

@@ -11,7 +11,7 @@ export default defineStore({
   state: () => {
     const user = useUserStore()
     return {
-      title: 'vue3-vite-ts',
+      title: 'vue3-vite-pinia-ts',
       user,
       obj: undefined as TestObject | undefined
     }

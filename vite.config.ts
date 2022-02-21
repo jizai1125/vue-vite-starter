@@ -27,6 +27,16 @@ export default defineConfig(({ mode }) => {
             resolveStyle: (name) => `vant/es/${name}/style/index`
           }
         ]
+      }),
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      }),
+      viteSvgIcons({
+        // 指定 svg 图标文件夹路径
+        iconDirs: [resolvePath('src/assets/icons')],
+        // Specify symbolId format
+        symbolId: 'icon-[dir]-[name]'
       })
     ],
     resolve: {
