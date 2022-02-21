@@ -1,5 +1,15 @@
 # vue3-vite2-ts-template
 
+## 快速克隆对应分支
+
+利用 [degit](https://github.com/Rich-Harris/degit) 工具快速克隆所需分支，该工具不会将 git 历史克隆下来。
+
+例如克隆 `main` 分支
+
+```bash
+$ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
+```
+
 ## 分支说明
 
 - [main](https://github.com/jizai1125/vue3-vite2-ts-template/tree/main)：基础配置
