@@ -1,10 +1,20 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import Layout from '@/layout/index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
+    name: 'Layout',
     path: '/',
-    name: 'HelloWorld',
-    component: () => import('@/views/HelloWorld.vue')
+    redirect: '/HomeIndex',
+    component: Layout,
+    children: [
+      {
+        name: 'HomeIndex',
+        path: 'homeIndex',
+        component: () => import('views/HomeIndex/index.vue'),
+        meta: { title: '首页' }
+      }
+    ]
   }
 ]
 

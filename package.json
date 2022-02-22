@@ -33,7 +33,11 @@
     "prettier": "^2.5.1",
     "rollup": "^2.78.0",
     "rollup-plugin-visualizer": "^5.5.2",
+<<<<<<< HEAD
     "terser": "^5.14.2",
+=======
+    "sass": "^1.49.8",
+>>>>>>> 2c89a5b (feat: 添加缩放适配插件)
     "typescript": "^4.4.4",
     "vite": "^3.0.4",
     "vite-plugin-svg-icons": "^1.1.0",
