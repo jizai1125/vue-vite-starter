@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+// 浏览器兼容
 import legacy from '@vitejs/plugin-legacy'
 import viteSvgIcons from 'vite-plugin-svg-icons'
+// 可视化分析打包结果
 import { visualizer } from 'rollup-plugin-visualizer'
 import colors from 'colors-console'
 
