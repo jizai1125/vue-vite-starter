@@ -1,16 +1,50 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { GlobalThemeOverrides, zhCN, dateZhCN } from 'naive-ui'
+const themeOverrides: GlobalThemeOverrides = {
+  common: {
+    infoColor: '#09A6FF',
+    primaryColor: '#09A6FF',
+    primaryColorHover: '#09A6FF',
+    primaryColorPressed: '#09A6FF'
+  },
+  Input: {
+    borderFocus: '1px solid #09A6FF',
+    borderHover: '1px solid #09A6FF'
+  },
+  Pagination: {
+    itemColor: '#fff',
+    itemTextColorHover: '#fff',
+    itemTextColorActive: '#fff',
+    itemBorderHover: '#3F9BE8',
+    itemColorActiveHover: '#3F9BE8',
+    itemColorHover: '#3F9BE8',
+    itemColorActive: '#3F9BE8',
+    itemBorderActive: '#3F9BE8',
+    buttonColor: '#fff',
+    buttonColorHover: '#3F9BE8',
+    buttonBorderHover: '#3F9BE8',
+    buttonIconColorHover: '#fff'
+  }
+}
+</script>
 
 <template>
-  <router-view></router-view>
+  <n-config-provider :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
+    <!-- <n-theme-editor> -->
+    <n-message-provider>
+      <router-view></router-view>
+    </n-message-provider>
+    <!-- </n-theme-editor> -->
+  </n-config-provider>
 </template>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html,
+body,
+#app,
+.n-config-provider {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 </style>

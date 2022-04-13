@@ -7,6 +7,8 @@ import viteSvgIcons from 'vite-plugin-svg-icons'
 // 可视化分析打包结果
 // import { visualizer } from 'rollup-plugin-visualizer'
 import colors from 'colors-console'
+import Components from 'unplugin-vue-components/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 const resolvePath = (path) => resolve(__dirname, path)
 
@@ -18,15 +20,18 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
-      legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      Components({
+        resolvers: [NaiveUiResolver()]
       }),
       viteSvgIcons({
         // 指定 svg 图标文件夹路径
         iconDirs: [resolvePath('src/assets/icons')],
         // Specify symbolId format
         symbolId: 'icon-[dir]-[name]'
+      }),
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       })
     ],
     resolve: {

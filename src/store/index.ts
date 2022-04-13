@@ -1,27 +1,5 @@
-import { defineStore } from 'pinia'
-import useUserStore from './user'
+import { createPinia } from 'pinia'
 
-interface TestObject {
-  label: string
-  phone: number
-}
+const store = createPinia()
 
-export default defineStore({
-  id: 'app',
-  state: () => {
-    const user = useUserStore()
-    return {
-      title: 'vue3-vite-ts',
-      user,
-      obj: undefined as TestObject | undefined
-    }
-  },
-  getters: {
-    userRole: (state) => state.user.role
-  },
-  actions: {
-    changeTitle() {
-      this.title = 'vue3+vite+ts！'
-    }
-  }
-})
+export default store
