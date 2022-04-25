@@ -52,6 +52,8 @@ const onDropdownSelect = (key: string | number, option: DropdownOption) => {
       break
   }
 }
+const goToGithub = () =>
+  window.open('https://github.com/jizai1125/vue3-vite2-ts-template/tree/admin')
 </script>
 
 <template>
@@ -82,7 +84,7 @@ const onDropdownSelect = (key: string | number, option: DropdownOption) => {
         </template>
         全屏
       </n-tooltip>
-      <n-icon :component="GithubFilled" size="22"></n-icon>
+      <n-icon :component="GithubFilled" size="22" class="github" @click="goToGithub"></n-icon>
       <n-dropdown trigger="hover" show-arrow :options="dropdownOptions" @select="onDropdownSelect">
         <n-avatar
           class="avatar"
@@ -117,6 +119,7 @@ const onDropdownSelect = (key: string | number, option: DropdownOption) => {
 .header-right {
   padding-right: 20px;
   .fullscreen,
+  .github,
   .avatar {
     cursor: pointer;
   }

@@ -88,6 +88,7 @@ const menuOpts = computed(() => {
     <router-link to="/" #="{ navigate, href }" custom>
       <n-a class="logo" :href="href" @click="navigate">
         <svg-icon name="logo" :size="siderCollapsed ? 50 : 80" />
+        <svg-icon name="sun" :size="siderCollapsed ? 0 : 40" />
         <div v-if="!siderCollapsed">vue3-admin-template</div>
       </n-a>
     </router-link>
