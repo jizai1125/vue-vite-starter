@@ -1,7 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layouts/index.vue'
 import EmptyContainer from '@/layouts/EmptyContainer.vue'
-import { MenuOutlined as MenuIcon } from '@vicons/antd'
+import { FireOutlined as NestedIcon } from '@vicons/antd'
+import SunSvg from '@/assets/icons/sun.svg'
 
 const nestedRoute: RouteRecordRaw = {
   name: 'Nested',
@@ -9,7 +10,7 @@ const nestedRoute: RouteRecordRaw = {
   redirect: '/nested/menu1',
   meta: {
     title: '嵌套菜单',
-    icon: MenuIcon,
+    icon: NestedIcon,
     sort: 2
   },
   component: Layout,
@@ -17,7 +18,7 @@ const nestedRoute: RouteRecordRaw = {
     {
       name: 'NestedMenu1',
       path: 'menu1',
-      meta: { title: '一级菜单' },
+      meta: { title: '一级菜单', icon: SunSvg },
       component: () => import('@/views/Nested/NestedMenu1.vue')
     },
     {
@@ -29,7 +30,7 @@ const nestedRoute: RouteRecordRaw = {
     {
       name: 'NestedMenu2',
       path: 'menu2',
-      meta: { title: '一级菜单（嵌套视图）' },
+      meta: { title: '一级菜单（嵌套视图）', icon: SunSvg },
       component: () => import('@/views/Nested/NestedMenu2.vue'),
       children: [
         {
@@ -43,7 +44,7 @@ const nestedRoute: RouteRecordRaw = {
     {
       name: 'NestedMenu3',
       path: 'menu3',
-      meta: { title: '一级菜单' },
+      meta: { title: '一级菜单', icon: SunSvg },
       component: EmptyContainer,
       children: [
         {

@@ -11,12 +11,12 @@ export const resolveAssetFile = (filePath: string): string => {
 }
 
 /**
- * 渲染图标 / 图片 为 VNode 函数
+ * 渲染图标 / 图片 为 NIcon 组件
  * @param icon 图标组件 / 图片地址
  * @param props 图标组件 props / img 属性
  * @returns VNode
  */
-export const renderIcon = (icon: Component | string, props?: object): VNode => {
+export const renderNIcon = (icon: Component | string, props?: object): VNode => {
   let iconVNode: VNode
   if (typeof icon === 'string') {
     iconVNode = h('img', { src: icon, style: { width: '100%' }, ...props })

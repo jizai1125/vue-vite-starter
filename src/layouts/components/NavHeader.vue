@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import type { DropdownOption } from 'naive-ui'
+import { useFullscreen } from '@vueuse/core'
+import useAppStore from '@/store/app'
+import { useRoute, useRouter } from 'vue-router'
+import { removeToken } from '@/utils/auth'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -6,21 +13,13 @@ import {
   FullscreenExitOutlined,
   FullscreenOutlined
 } from '@vicons/antd'
-import useAppStore from '@/store/app'
-import { computed, ref } from 'vue'
-import type { DropdownOption } from 'naive-ui'
-import { useFullscreen } from '@vueuse/core'
-import { useRoute, useRouter } from 'vue-router'
-import { removeToken } from '@/utils/auth'
 
 const appStore = useAppStore()
 const route = useRoute()
 const router = useRouter()
 // 折叠菜单按钮
-const collapsed = computed(() => appStore.sideMenuCollapsed)
-const changeCollapsed = () => {
-  appStore.sideMenuCollapsed = !collapsed.value
-}
+const { siderCollapsed } = storeToRefs(appStore)
+
 // 面包屑
 const breadcrumbList = computed(() => {
   // 只展示有配置 router.meta.title
@@ -61,9 +60,9 @@ const goToGithub = () =>
     <n-space class="header-left" align="center">
       <n-icon
         class="collapsed"
-        :component="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined"
+        :component="siderCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined"
         size="18"
-        @click="changeCollapsed"></n-icon>
+        @click="() => (siderCollapsed = !siderCollapsed)"></n-icon>
       <n-breadcrumb class="breadcrumb">
         <n-breadcrumb-item v-for="routeItem in breadcrumbList" :key="routeItem.path">
           <router-link :to="routeItem.path">

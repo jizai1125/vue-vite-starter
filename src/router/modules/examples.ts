@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layouts/index.vue'
-import { MenuOutlined as MenuIcon } from '@vicons/antd'
+import { DribbbleOutlined as ExamplesIcon } from '@vicons/antd'
 
 const examplesRoute: RouteRecordRaw = {
   name: 'Examples',
@@ -8,7 +8,7 @@ const examplesRoute: RouteRecordRaw = {
   redirect: '/examples/example1',
   meta: {
     title: 'examples',
-    icon: MenuIcon,
+    icon: ExamplesIcon,
     sort: 99
   },
   component: Layout,

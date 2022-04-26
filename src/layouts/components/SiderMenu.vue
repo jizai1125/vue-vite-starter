@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import useAppStore from '@/store/app'
 import useUserStore from '@/store/user'
 import { useRoute, RouteMeta, RouteRecordRaw, RouterLink } from 'vue-router'
-import { renderIcon } from '@/utils'
+import { renderNIcon } from '@/utils'
 const route = useRoute()
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -35,7 +35,7 @@ const renderMenuIcon = (option: MenuOption) => {
   const color = isActive ? '#09A6FF' : '#47505E'
   let icon = isActive ? option.activeMenuIcon : option.menuIcon
   icon = icon || option.menuIcon
-  return renderIcon(icon as string | Component, { color })
+  return renderNIcon(icon as string | Component, { color })
 }
 
 function generateMenuOpts(routes: RouteRecordRaw[], parent = '/'): MenuOption[] {
@@ -87,12 +87,15 @@ const menuOpts = computed(() => {
     @update:collapsed="(flag: boolean) => (siderCollapsed = flag)">
     <router-link to="/" #="{ navigate, href }" custom>
       <n-a class="logo" :href="href" @click="navigate">
-        <svg-icon name="logo" :size="siderCollapsed ? 50 : 80" />
+        <svg-icon name="logo" :size="siderCollapsed ? 40 : 70" />
         <svg-icon name="sun" :size="siderCollapsed ? 0 : 40" />
-        <div v-if="!siderCollapsed">vue3-admin-template</div>
+        <transition name="fade">
+          <div v-if="!siderCollapsed">vue3-admin-template</div>
+        </transition>
       </n-a>
     </router-link>
     <n-menu
+      class="menu"
       accordion
       :value="activeMenuKey"
       :collapsed-width="siderCollapsedWidth"
@@ -104,6 +107,13 @@ const menuOpts = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.fade-enter-active {
+  transition: all 2s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .logo {
   display: block;
   padding: 10px 0;
@@ -112,5 +122,8 @@ const menuOpts = computed(() => {
   text-decoration: none;
   color: #fff;
   background-color: yellowgreen;
+}
+.menu {
+  user-select: none;
 }
 </style>

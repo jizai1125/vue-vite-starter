@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layouts/index.vue'
 import moduleRoutes from './modules'
-import { MenuOutlined as MenuIcon } from '@vicons/antd'
+import { DashboardOutlined as DashbordIcon } from '@vicons/antd'
 // 权限路由表，后续会根据用户权限动态添加到 vue router
 export const asyncRoutes: RouteRecordRaw[] = [
   {
@@ -16,7 +16,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         path: '/dashboard',
         meta: {
           title: 'Dashboard',
-          icon: MenuIcon
+          icon: DashbordIcon
         },
         component: () => import('@/views/Dashboard/index.vue')
       }
