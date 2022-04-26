@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import { FormInst, useMessage, FormRules } from 'naive-ui'
-import { reactive, ref } from 'vue'
-import { UserOutlined as UserIcon, LockOutlined as LockIcon } from '@vicons/antd'
+import { computed, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import useUserStore from '@/store/user'
 import { setToken } from '@/utils/auth'
+import { resolveAssetFile } from '@/utils'
 
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 const message = useMessage()
+
+const isQrCodeType = ref(false)
+const changeLoginType = () => {
+  isQrCodeType.value = !isQrCodeType.value
+}
+const loginTypeIcon = computed(() => {
+  return isQrCodeType.value ? 'icon-pc.png' : 'qrcode.png'
+})
+
 interface ModelType {
   username: string
   password: string
@@ -37,6 +46,7 @@ const rules: FormRules = {
     }
   ]
 }
+
 const login = (e: MouseEvent) => {
   e.preventDefault()
   console.log(modelForm)
@@ -57,25 +67,31 @@ const login = (e: MouseEvent) => {
 
 <template>
   <div class="login-container">
-    <div class="login-form">
-      <div class="title">vue3-admin-template</div>
-      <n-form ref="formRef" size="large" :show-label="false" :model="modelForm" :rules="rules">
+    <div class="left-content"></div>
+    <div class="right-content">
+      <img :src="resolveAssetFile(loginTypeIcon)" alt="" class="qrcode" @click="changeLoginType" />
+      <img src="@/assets/logo.png" class="logo" alt="" />
+      <div class="logo">
+        <svg-icon name="logo" :size="80" />
+        <svg-icon name="sun" :size="40" />
+      </div>
+      <div class="title">vue3-vite-ts-template</div>
+      <n-form
+        ref="formRef"
+        size="large"
+        :show-require-mark="false"
+        :show-label="false"
+        :model="modelForm"
+        :rules="rules">
         <n-form-item path="username">
-          <n-input v-model:value="modelForm.username" placeholder="请输入您的用户名">
-            <template #prefix>
-              <n-icon :component="UserIcon" color="#666" />
-            </template>
-          </n-input>
+          <n-input v-model:value="modelForm.username" placeholder="请输入账号"> </n-input>
         </n-form-item>
         <n-form-item path="password">
           <n-input
             v-model:value="modelForm.password"
             type="password"
-            placeholder="请输入您的密码"
+            placeholder="请输入密码"
             @keydown.enter="login">
-            <template #prefix>
-              <n-icon :component="LockIcon" color="#666" />
-            </template>
           </n-input>
         </n-form-item>
         <n-form-item>
@@ -90,25 +106,29 @@ const login = (e: MouseEvent) => {
 
 <style lang="scss" scoped>
 .login-container {
+  display: flex;
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: aliceblue;
-  .login-form {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 400px;
-    height: 412px;
-    padding: 50px 40px;
+  .left-content {
+    flex: 1;
+    min-width: 400px;
+    background: url(@/assets/login-bg2.png) 45% 160px/45vw auto no-repeat,
+      url(@/assets/login-bg.png) -5px/100% 105% no-repeat;
+  }
+  .right-content {
+    width: 546px;
+    height: 100%;
+    padding: 185px 75px 0;
     box-sizing: border-box;
     background: #fff;
-    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
+    .logo {
+      text-align: center;
+    }
     .title {
-      font-size: 30px;
-      color: #2299fe;
+      font-size: 16px;
+      color: #47505e;
+      letter-spacing: 4px;
       text-align: center;
       margin-bottom: 30px;
     }
