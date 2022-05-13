@@ -56,8 +56,8 @@ export default function useECharts(
 export function useLineChart(domSelectors: string, isRenderImmediate?: boolean) {
   const defaultLineOpt: EChartsOption = {
     grid: {
-      left: '0%',
-      right: '4%',
+      left: '5%',
+      right: '5%',
       top: '10%',
       bottom: '10%',
       containLabel: true
@@ -78,6 +78,7 @@ export function useLineChart(domSelectors: string, isRenderImmediate?: boolean) 
         }
       },
       axisLabel: {
+        color: '#97A3BB',
         fontSize: 16,
         fontFamily: 'PingFang SC'
       },
@@ -95,9 +96,9 @@ export function useLineChart(domSelectors: string, isRenderImmediate?: boolean) 
       },
       axisLabel: {
         fontSize: 16,
+        margin: 20,
         fontFamily: 'Noto Sans S Chinese',
-        fontWeight: 'bold',
-        color: '#A6A6A6'
+        color: '#97A3BB'
       },
       splitLine: {
         lineStyle: {

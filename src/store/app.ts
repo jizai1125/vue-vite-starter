@@ -9,7 +9,9 @@ export default defineStore('app', {
       // 侧边菜单栏折叠后宽度
       siderCollapsedWidth: 80,
       // 侧边菜单栏折叠状态
-      siderCollapsed: false
+      siderCollapsed: false,
+      // 全局 loading
+      globalLoading: false
     }
   },
   getters: {

@@ -2,8 +2,8 @@
 import { resolveAssetFile } from 'utils'
 import CardItem from './components/CardItem.vue'
 import { useLineChart } from '@/composables/useECharts'
-import { onMounted, ref } from 'vue'
-
+import { nextTick, ref, watch } from 'vue'
+import useAppStpre from '@/store/app'
 const rangeSelect = ref(1)
 const selectOptions = [
   {
@@ -73,59 +73,67 @@ const cardList2 = [
     color: '#8083F1'
   }
 ]
-const chartData = [
-  {
-    name: '3.01',
-    value: 100
-  },
-  {
-    name: '3.02',
-    value: 200
-  },
-  {
-    name: '3.03',
-    value: 300
-  },
-  {
-    name: '3.04',
-    value: 150
-  },
-  {
-    name: '3.05',
-    value: 200
-  },
-  {
-    name: '3.06',
-    value: 300
-  },
-  {
-    name: '3.07',
-    value: 500
-  },
-  {
-    name: '3.08',
-    value: 600
-  },
-  {
-    name: '3.09',
-    value: 700
-  },
-  {
-    name: '3.10',
-    value: 800
-  }
-]
-const lineChart = useLineChart('#lineChart')
-onMounted(() => {
-  lineChart.render({
-    xAxis: {
-      data: chartData.map((item) => item.name)
+const appStore = useAppStpre()
+const chartData = ref<any[]>([])
+appStore.globalLoading = true
+setTimeout(() => {
+  appStore.globalLoading = false
+  chartData.value = [
+    {
+      name: '3.01',
+      value: 100
     },
-    series: [
-      {
-        data: chartData
-      }
-    ]
+    {
+      name: '3.02',
+      value: 200
+    },
+    {
+      name: '3.03',
+      value: 300
+    },
+    {
+      name: '3.04',
+      value: 150
+    },
+    {
+      name: '3.05',
+      value: 200
+    },
+    {
+      name: '3.06',
+      value: 300
+    },
+    {
+      name: '3.07',
+      value: 500
+    },
+    {
+      name: '3.08',
+      value: 600
+    },
+    {
+      name: '3.09',
+      value: 700
+    },
+    {
+      name: '3.10',
+      value: 800
+    }
+  ]
+}, 3000)
+const lineChart = useLineChart('#lineChart')
+watch(chartData, () => {
+  nextTick(() => {
+    lineChart.render({
+      xAxis: {
+        data: chartData.value.map((item) => item.name)
+      },
+      series: [
+        {
+          data: chartData.value
+        }
+      ]
+    })
   })
 })
 </script>
