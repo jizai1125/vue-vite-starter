@@ -15,7 +15,7 @@ const userStore = defineStore('user', {
       userInfo: undefined,
       // 所有路由表
       routes: [],
-      // 用户具有的权限路由资源
+      // 用户具有的权限路由资源, 后端返回
       authRoutes: []
     }
   },
