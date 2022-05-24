@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { FormInst, useMessage, FormRules } from 'naive-ui'
-import { computed, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import useUserStore from '@/store/user'
-import { setToken } from '@/utils/auth'
 import { resolveAssetFile } from '@/utils'
 
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 const message = useMessage()
-
-const isQrCodeType = ref(false)
-const changeLoginType = () => {
-  isQrCodeType.value = !isQrCodeType.value
-}
-const loginTypeIcon = computed(() => {
-  return isQrCodeType.value ? 'icon-pc.png' : 'qrcode.png'
-})
 
 interface ModelType {
   username: string
@@ -54,11 +45,7 @@ const login = (e: MouseEvent) => {
     if (error) {
       return message.warning('哒咩~哒咩~')
     }
-    // await loginApi(modelForm)
-    const token = 'token_xxx'
-    const userId = 1
-    setToken(token)
-    await userStore.getUserInfo(userId)
+    await userStore.login(modelForm)
     const redirect = route.query.redirect?.toString()
     router.replace(redirect || '/')
   })
@@ -69,8 +56,6 @@ const login = (e: MouseEvent) => {
   <div class="login-container">
     <div class="left-content"></div>
     <div class="right-content">
-      <img :src="resolveAssetFile(loginTypeIcon)" alt="" class="qrcode" @click="changeLoginType" />
-      <img src="@/assets/logo.png" class="logo" alt="" />
       <div class="logo">
         <svg-icon name="logo" :size="80" />
         <svg-icon name="sun" :size="40" />

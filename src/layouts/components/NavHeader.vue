@@ -4,8 +4,8 @@ import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
 import { useFullscreen } from '@vueuse/core'
 import useAppStore from '@/store/app'
+import useUserStore from '@/store/user'
 import { useRoute, useRouter } from 'vue-router'
-import { removeToken } from '@/utils/auth'
 import { throttle } from 'lodash-es'
 
 import {
@@ -17,6 +17,7 @@ import {
 } from '@vicons/antd'
 
 const appStore = useAppStore()
+const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 // 折叠菜单按钮
@@ -60,12 +61,12 @@ const dropdownOptions = [
     key: 'logout'
   }
 ]
-const onDropdownSelect = (key: string | number, option: DropdownOption) => {
+const onDropdownSelect = async (key: string | number, option: DropdownOption) => {
   console.log(key, option)
   switch (option.key) {
     case 'logout':
       console.log('退出登录')
-      removeToken()
+      await userStore.logout()
       router.push('/login')
       break
   }
