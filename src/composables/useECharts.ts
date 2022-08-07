@@ -1,7 +1,6 @@
-import { nextTick, onMounted, shallowReactive, watch } from 'vue'
+import { onMounted, shallowReactive } from 'vue'
 import * as echarts from 'echarts'
 import type { EChartsOption, ECharts } from 'echarts'
-import { merge } from 'lodash-es'
 
 interface ChartContext {
   // echart 实例

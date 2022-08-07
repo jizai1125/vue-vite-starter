@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import useAppStpre from '@/store/app'
 const appStore = useAppStpre()
 </script>

@@ -3,7 +3,7 @@ import { resolveAssetFile } from 'utils'
 import CardItem from './components/CardItem.vue'
 import { useLineChart } from '@/composables/useECharts'
 import { nextTick, ref, watch } from 'vue'
-import useAppStpre from '@/store/app'
+import useAppStore from '@/store/app'
 const rangeSelect = ref(1)
 const selectOptions = [
   {
@@ -73,7 +73,7 @@ const cardList2 = [
     color: '#8083F1'
   }
 ]
-const appStore = useAppStpre()
+const appStore = useAppStore()
 const chartData = ref<any[]>([])
 appStore.globalLoading = true
 setTimeout(() => {
