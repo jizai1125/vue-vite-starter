@@ -1,4 +1,4 @@
-# vue3-vite2-ts-template
+# vue-vite-starter
 
 ## 快速克隆对应分支
 
@@ -18,17 +18,17 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 ## main 分支集成说明
 
-- 技术栈：[vue 3](https://v3.cn.vuejs.org/guide/introduction.html)、[vite 2](https://cn.vitejs.dev/guide/)、[pinia 2](https://pinia.vuejs.org/introduction.html)、[Vue Router 4](https://next.router.vuejs.org/zh/introduction.html)、[TypeScript ](https://www.typescriptlang.org/)等
+- 技术栈：[vue 3](https://v3.cn.vuejs.org/guide/introduction.html)、[vite 3](https://cn.vitejs.dev/guide/)、[pinia 2](https://pinia.vuejs.org/introduction.html)、[Vue Router 4](https://next.router.vuejs.org/zh/introduction.html)、[TypeScript 4](https://www.typescriptlang.org/)等
 - 代码风格检查约束：ESLint + Prettier、husky + lint-staged
 - 环境相关配置
-- 浏览器兼容性
-- 打包分析：rollup-plugin-visualizer 插件
+- 浏览器兼容性：@vitejs/plugin-legacy 插件
+- 打包结果分析：rollup-plugin-visualizer 插件
 - svg 图片：SvgIcon 组件、vite-plugin-svg-icons 插件
 - ...
 
 **相关文档：**
 
-- [vue3-vite2-ts-template 基础搭建文档](https://jizai-.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
+- [vue-vite-starter 基础搭建文档](https://jizai-.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
 
 ## h5 分支集成说明
 
@@ -44,7 +44,7 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue3-vite2-ts-template 【H5 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-H5-59684b7e415949b6939c7afe2ceb73fd)
+- [vue-vite-starter 【H5 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-H5-59684b7e415949b6939c7afe2ceb73fd)
 
 ## admin 分支集成说明
 
@@ -60,7 +60,7 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue3-vite2-ts-template 【admin 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
+- [vue-vite-starter【admin 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
 
 ## 推荐开发工具
 

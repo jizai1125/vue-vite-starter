@@ -5,7 +5,7 @@ import { resolve } from 'path'
 import legacy from '@vitejs/plugin-legacy'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 // 可视化分析打包结果
-import { visualizer } from 'rollup-plugin-visualizer'
+// import { visualizer } from 'rollup-plugin-visualizer'
 import colors from 'colors-console'
 
 const resolvePath = (path) => resolve(__dirname, path)
@@ -49,20 +49,19 @@ export default defineConfig(({ mode }) => {
       //   }
       // }
     },
+    esbuild: {
+      // 生产环境删除 console、debugger 语句
+      drop: IS_PROD ? ['debugger', 'console'] : []
+    },
     // 构建时配置
     build: {
       // 非生产环境生成 sourcemap
       sourcemap: !IS_PROD,
-      terserOptions: {
-        compress: {
-          // 生产环境去除 console、debugger
-          drop_console: IS_PROD,
-          drop_debugger: true
-        }
-      },
       // Rollup 打包配置
       rollupOptions: {
-        plugins: [visualizer({ open: true, gzipSize: true })]
+        plugins: [
+          // visualizer({ open: true, gzipSize: true })
+        ]
       }
     }
   }
