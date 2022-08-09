@@ -3,7 +3,6 @@ import { FormInst, useMessage, FormRules } from 'naive-ui'
 import { reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import useUserStore from '@/store/user'
-import { resolveAssetFile } from '@/utils'
 
 const router = useRouter()
 const route = useRoute()
@@ -16,8 +15,8 @@ interface ModelType {
 }
 const formRef = ref<FormInst | null>(null)
 const modelForm = reactive<ModelType>({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: '123456'
 })
 const rules: FormRules = {
   username: [
@@ -60,7 +59,7 @@ const login = (e: MouseEvent) => {
         <svg-icon name="logo" :size="80" />
         <svg-icon name="sun" :size="40" />
       </div>
-      <div class="title">vue3-vite-ts-template</div>
+      <div class="title">vue-vite-starter</div>
       <n-form
         ref="formRef"
         size="large"
