@@ -1,13 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import Components from 'unplugin-vue-components/vite'
+import { VantResolver } from 'unplugin-vue-components/resolvers'
 // 浏览器兼容
 import legacy from '@vitejs/plugin-legacy'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 // 可视化分析打包结果
 // import { visualizer } from 'rollup-plugin-visualizer'
 import colors from 'colors-console'
-import styleImport from 'vite-plugin-style-import'
 
 const resolvePath = (path) => resolve(__dirname, path)
 
@@ -19,14 +20,8 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
-      styleImport({
-        libs: [
-          {
-            libraryName: 'vant',
-            esModule: true,
-            resolveStyle: (name) => `vant/es/${name}/style/index`
-          }
-        ]
+      Components({
+        resolvers: [VantResolver()]
       }),
       legacy({
         targets: ['ie >= 11'],

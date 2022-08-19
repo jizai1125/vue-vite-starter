@@ -1,8 +1,6 @@
 import { App } from 'vue'
 
-import { Button, Icon, Col, Row } from 'vant'
-
-const components = [Button, Icon, Col, Row]
+const components: any[] = []
 
 export default function registerGlobalComp(app: App) {
   components.forEach((comp) => {
