@@ -1,4 +1,4 @@
-import request from 'utils/request'
+import request from '@/utils/request'
 import { ExpressData } from './resType'
 
 export const getList = () =>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, Method } from 'axios'
-import { getToken } from 'utils/auth'
+import { getToken } from '@/utils/auth'
 
 const baseURL = import.meta.env.VITE_API_URL
 

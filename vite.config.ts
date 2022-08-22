@@ -31,11 +31,7 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        '@': resolvePath('src'),
-        api: resolvePath('src/api'),
-        components: resolvePath('src/components'),
-        views: resolvePath('src/views'),
-        utils: resolvePath('src/utils')
+        '@': resolvePath('src')
       }
     },
     // 开发服务器配置

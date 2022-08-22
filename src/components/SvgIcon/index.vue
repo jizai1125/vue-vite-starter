@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+  name: 'SvgIcon'
+}
+</script>
 <script setup lang="ts">
 import { computed, withDefaults } from 'vue'
 

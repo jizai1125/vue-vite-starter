@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import useAppStore from '@/store'
 import { storeToRefs } from 'pinia'
-import { resolveAssetFile } from 'utils'
+import { resolveAssetFile } from '@/utils'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { getList } from '@/api'
 
-getList().then((res) => {
+getList().then((res: any) => {
   console.log(res, res.com)
 })
 
