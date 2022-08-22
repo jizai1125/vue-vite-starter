@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+  name: 'Layout'
+}
+</script>
 <script setup lang="ts">
 import SiderMenu from './components/SiderMenu.vue'
 import NavHeader from './components/NavHeader.vue'

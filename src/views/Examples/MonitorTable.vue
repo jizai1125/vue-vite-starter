@@ -3,7 +3,7 @@ import QueryForm from './QueryForm.vue'
 const columns = [
   {
     type: 'selection',
-    disabled(row, index) {
+    disabled(row: any) {
       return row.name === 'Edward King 3'
     }
   },

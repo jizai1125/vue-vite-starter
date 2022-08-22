@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { resolveAssetFile } from 'utils'
+import { resolveAssetFile } from '@/utils'
 import { computed } from 'vue'
 import CountUp from 'vue-countup-v3'
 

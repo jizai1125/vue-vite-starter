@@ -35,5 +35,7 @@ module.exports = {
    */
   // eslint-plugin-vue @typescript-eslint/eslint-plugin 的缩写
   plugins: ['vue', '@typescript-eslint'],
-  rules: {}
+  rules: {
+    'vue/multi-word-component-names': 0
+  }
 }

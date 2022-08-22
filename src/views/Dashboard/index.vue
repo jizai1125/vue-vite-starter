@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { resolveAssetFile } from 'utils'
+import { resolveAssetFile } from '@/utils'
 import CardItem from './components/CardItem.vue'
 import { useLineChart } from '@/composables/useECharts'
 import { nextTick, ref, watch } from 'vue'
