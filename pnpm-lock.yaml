@@ -22,7 +22,7 @@ specifiers:
   terser: ^5.14.2
   typescript: ^4.4.4
   unplugin-vue-components: ^0.22.4
-  vant: ^3.5.4
+  vant: ^3.6.4
   vite: ^3.0.4
   vite-plugin-svg-icons: ^1.1.0
   vue: ^3.2.25
@@ -32,7 +32,7 @@ specifiers:
 dependencies:
   axios: 0.24.0
   pinia: 2.0.18_j6bzmzd4ujpabbp5objtwxyjp4
-  vant: 3.5.4_vue@3.2.37
+  vant: 3.6.4_vue@3.2.37
   vue: 3.2.37
   vue-router: 4.1.3_vue@3.2.37
 
@@ -380,8 +380,8 @@ packages:
       '@popperjs/core': 2.11.6
     dev: false
 
-  /@vant/use/1.4.1:
-    resolution: {integrity: sha512-YonNN0SuJLEJuqdoMcVAJm2JUZWkHNrW81QzeF6FLyG5HFUGlmTM5Sby7gdS3Z/8UDMlkWRQpJxBWbmVzmUWxQ==}
+  /@vant/use/1.4.3:
+    resolution: {integrity: sha512-rSnETN7P9qT1WbItMpQxBqe3cHeK2ZFYp1sCxWUXaTeI71TqA8sOdzC36ledZ36NQgFNTch9fsRPYOkrCgZfQA==}
     dev: false
 
   /@vitejs/plugin-legacy/2.0.1_terser@5.14.2+vite@3.0.8:
@@ -3548,14 +3548,14 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vant/3.5.4_vue@3.2.37:
-    resolution: {integrity: sha512-NwKDfYk1A1ax4WZRSpOse0GsDSMQWoB245fhzzduXW6J3qv4f/cn3CedxH/uzBXglhNXovFTExFvnYjt5fzp3Q==}
+  /vant/3.6.4_vue@3.2.37:
+    resolution: {integrity: sha512-IgPzekX7YGoqf7h/jx75F087lsBEWA/cQfRqPVgiR6cyqrmi8+dfpfFTz2OcPZ755avTzKk3L0WaclXIbHnVeQ==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
       '@vant/icons': 1.8.0
       '@vant/popperjs': 1.2.1
-      '@vant/use': 1.4.1
+      '@vant/use': 1.4.3
       vue: 3.2.37
     dev: false
 
