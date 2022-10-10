@@ -39,6 +39,13 @@ export default defineConfig(({ mode }) => {
         '@': resolvePath('src')
       }
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/styles/variables.scss";`
+        }
+      }
+    },
     // 开发服务器配置
     server: {
       // 代理配置

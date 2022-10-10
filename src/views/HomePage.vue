@@ -22,8 +22,11 @@ const changeUserData = (user: object) => {
 </script>
 
 <template>
-  <div class="home-container">
-    <h2 class="title">{{ title }}</h2>
+  <div class="home-container g-container">
+    <h2 class="title">
+      <svg-icon name="logo" size="18" />
+      {{ title }}
+    </h2>
     <van-row>
       <van-col span="5"> <van-icon name="https://vitejs.cn/logo.svg" /></van-col>
       <van-col span="5"><van-icon name="https://pinia.vuejs.org/logo.svg" /></van-col>
@@ -46,16 +49,14 @@ const changeUserData = (user: object) => {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .home-container {
-  height: 100%;
-  width: 100%;
   background-color: #fefef8;
   text-align: center;
-}
-.title {
-  margin: 0;
-  padding: 20px 0;
-  text-align: center;
+  .title {
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+  }
 }
 </style>

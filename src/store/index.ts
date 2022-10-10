@@ -11,7 +11,7 @@ export default defineStore({
   state: () => {
     const user = useUserStore()
     return {
-      title: 'vue3-vite-pinia-ts',
+      title: 'vue-vite-starter（h5）',
       user,
       obj: undefined as TestObject | undefined
     }
@@ -21,7 +21,7 @@ export default defineStore({
   },
   actions: {
     changeTitle() {
-      this.title = 'vue3+vite+pinia+ts！'
+      this.title = 'vue+vite+starter（h5）'
     }
   }
 })

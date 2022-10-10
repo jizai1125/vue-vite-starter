@@ -1,9 +1,9 @@
 import { App } from 'vue'
 
-const components: any[] = []
-
-export default function registerGlobalComp(app: App) {
-  components.forEach((comp) => {
-    app.component(comp.name, comp)
+export default function registerComponents(app: App) {
+  const components = import.meta.glob('./**/**.vue', { eager: true })
+  Object.keys(components).forEach((it: any) => {
+    const component = components[it] as any
+    app.component(component.default.name, component.default)
   })
 }

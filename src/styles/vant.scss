@@ -1,0 +1,7 @@
+/* 
+  全局覆盖 vant 定义的 css 变量
+  https://vant-contrib.gitee.io/vant/v3/#/zh-CN/config-provider#ji-chu-bian-liang
+*/
+:root {
+  --van-tabbar-item-text-color: #333;
+}
