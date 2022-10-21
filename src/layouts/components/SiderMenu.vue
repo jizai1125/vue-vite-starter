@@ -77,32 +77,31 @@ const menuOpts = computed(() => {
 
 <template>
   <n-layout-sider
-    bordered
-    collapse-mode="width"
-    :collapsed-width="siderCollapsedWidth"
+    v-model:collapsed="siderCollapsed"
     :width="siderWidth"
-    show-trigger="bar"
+    :collapsed-width="siderCollapsedWidth"
+    bordered
     :native-scrollbar="false"
-    :collapsed="siderCollapsed"
-    @update:collapsed="(flag: boolean) => (siderCollapsed = flag)">
+    collapse-mode="width"
+    show-trigger="bar">
     <router-link to="/" #="{ navigate, href }" custom>
       <n-a class="logo" :href="href" @click="navigate">
         <svg-icon name="logo" :size="siderCollapsed ? 40 : 70" />
         <svg-icon name="sun" :size="siderCollapsed ? 0 : 40" />
         <transition name="fade">
-          <div v-if="!siderCollapsed">vue3-admin-template</div>
+          <div v-if="!siderCollapsed">vue-admin-starter</div>
         </transition>
       </n-a>
     </router-link>
     <n-menu
       class="menu"
-      accordion
       :value="activeMenuKey"
-      :collapsed-width="siderCollapsedWidth"
-      :collapsed="siderCollapsed"
       :options="menuOpts"
+      :collapsed="siderCollapsed"
+      :collapsed-width="siderCollapsedWidth"
       :render-label="renderMenuLabel"
-      :render-icon="renderMenuIcon" />
+      :render-icon="renderMenuIcon"
+      accordion />
   </n-layout-sider>
 </template>
 

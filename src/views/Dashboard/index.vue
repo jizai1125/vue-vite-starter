@@ -2,10 +2,13 @@
 import { resolveAssetFile } from '@/utils'
 import CardItem from './components/CardItem.vue'
 import { useLineChart } from '@/composables/useECharts'
-import { nextTick, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import useAppStore from '@/store/app'
-const rangeSelect = ref(1)
-const selectOptions = [
+
+const appStore = useAppStore()
+// 业务组件
+const dateRangeSelect = ref(1)
+const dateRangeSelectOpts = [
   {
     label: '最近一个月',
     value: 1
@@ -19,8 +22,7 @@ const selectOptions = [
     value: 3
   }
 ]
-
-const cardList = [
+const businessCardList = [
   {
     title: '组件个数',
     value: 293034,
@@ -46,7 +48,8 @@ const cardList = [
     color: '#FF7743'
   }
 ]
-const cardList2 = [
+// 组件调用趋势
+const trendCardList = [
   {
     title: '调用次数',
     value: 28374,
@@ -73,8 +76,17 @@ const cardList2 = [
     color: '#8083F1'
   }
 ]
-const appStore = useAppStore()
+// line chart
+const lineChart = useLineChart('#lineChart')
 const chartData = ref<any[]>([])
+watch(
+  () => appStore.siderCollapsed,
+  (flag) => {
+    console.log(flag)
+    lineChart.resize()
+  }
+)
+// mock data
 appStore.globalLoading = true
 setTimeout(() => {
   appStore.globalLoading = false
@@ -121,19 +133,16 @@ setTimeout(() => {
     }
   ]
 }, 3000)
-const lineChart = useLineChart('#lineChart')
 watch(chartData, () => {
-  nextTick(() => {
-    lineChart.render({
-      xAxis: {
-        data: chartData.value.map((item) => item.name)
-      },
-      series: [
-        {
-          data: chartData.value
-        }
-      ]
-    })
+  lineChart.render({
+    xAxis: {
+      data: chartData.value.map((item) => item.name)
+    },
+    series: [
+      {
+        data: chartData.value
+      }
+    ]
   })
 })
 </script>
@@ -141,13 +150,16 @@ watch(chartData, () => {
 <template>
   <n-card title="业务组件" size="small" segmented hoverable class="widget-business">
     <template #header-extra>
-      <n-select v-model:value="rangeSelect" :options="selectOptions" style="width: 120px" />
+      <n-select
+        v-model:value="dateRangeSelect"
+        :options="dateRangeSelectOpts"
+        style="width: 120px" />
     </template>
-    <card-item v-for="item in cardList" :key="item.title" v-bind="item"></card-item>
+    <card-item v-for="item in businessCardList" :key="item.title" v-bind="item"></card-item>
   </n-card>
   <n-card title="组件调用趋势" size="small" segmented class="widget-trend">
     <div class="card-wrap">
-      <card-item v-for="item in cardList2" :key="item.title" v-bind="item">
+      <card-item v-for="item in trendCardList" :key="item.title" v-bind="item">
         <img :src="resolveAssetFile(item.img)" alt="" />
       </card-item>
     </div>

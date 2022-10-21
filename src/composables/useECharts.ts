@@ -1,48 +1,78 @@
 import { onMounted, shallowReactive } from 'vue'
 import * as echarts from 'echarts'
 import type { EChartsOption, ECharts } from 'echarts'
+import { merge } from 'lodash-es'
+import { useEventListener, useThrottleFn } from '@vueuse/core'
 
 interface ChartContext {
   // echart 实例
-  instance?: ECharts
-  // 渲染 echarts
+  instance: ECharts | undefined
   render: (option: EChartsOption) => ECharts
+  reRender: () => void
+  dispose: () => void
+  resize: () => void
 }
 /**
  * echarts 渲染
  * @param domSelectors dom 选择器 例如 #id /.class ...
- * @param option echarts option
+ * @param initOption echarts option
  * @param isRenderImmediate 是否立即渲染
  * @returns ChartContext
  */
 export default function useECharts(
   domSelectors: string,
-  option: EChartsOption = {},
+  initOption: EChartsOption = {},
   isRenderImmediate = true
 ) {
-  // 渲染 echart
-  const render = (option: EChartsOption = {}) => {
-    if (!chartCtx.instance) {
-      const el = document.querySelector(domSelectors) as HTMLElement
-      if (!el) {
-        console.warn('useECharts >>> dom 获取失败, 请确保再 dom 挂载后调用！')
-      }
-      chartCtx.instance = echarts.init(el)
-    }
-    chartCtx.instance.setOption(option)
-
-    return chartCtx.instance
-  }
   // 使用 shallowReactive 包裹
-  const chartCtx: ChartContext = shallowReactive({
+  const chartCtx = shallowReactive<ChartContext>({
     instance: undefined,
-    render
+    render: _render,
+    reRender,
+    dispose: _dispose,
+    resize: _resize
   })
   // 立即渲染
   if (isRenderImmediate) {
     onMounted(() => {
-      render(option)
+      _render(initOption)
     })
+  }
+  useEventListener(window, 'resize', useThrottleFn(_resize, 500, true))
+
+  // 初始渲染
+  function _render(option: EChartsOption = {}): ECharts {
+    let targetOption = option
+    if (!chartCtx.instance) {
+      const el = document.querySelector(domSelectors) as HTMLElement
+      if (!el) {
+        console.warn('[useECharts] DOM 获取失败, 请确保在 DOM 挂载后调用！')
+      }
+      chartCtx.instance = echarts.init(el)
+      if (!isRenderImmediate) {
+        // 若初始时未渲染，需与初始配置合并
+        targetOption = merge(initOption, option)
+      }
+    }
+    chartCtx.instance.setOption(targetOption)
+
+    return chartCtx.instance
+  }
+  // 销毁实例
+  function _dispose() {
+    chartCtx.instance?.dispose()
+    chartCtx.instance = undefined
+  }
+  // 重新渲染，用于容器 DOM 节点被销毁后再次重建
+  function reRender() {
+    if (!chartCtx.instance) return
+    const opts = chartCtx.instance.getOption()
+    _dispose()
+    _render(opts as EChartsOption)
+  }
+  function _resize() {
+    console.log('[useECharts resize]', domSelectors)
+    chartCtx.instance?.resize()
   }
   return chartCtx
 }

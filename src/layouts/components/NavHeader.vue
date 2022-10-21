@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, onUnmounted } from 'vue'
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
-import { useFullscreen } from '@vueuse/core'
+import { useFullscreen, useEventListener, useThrottleFn } from '@vueuse/core'
 import useAppStore from '@/store/app'
 import useUserStore from '@/store/user'
 import { useRoute, useRouter } from 'vue-router'
-import { throttle } from 'lodash-es'
 
 import {
   MenuFoldOutlined,
@@ -23,22 +22,12 @@ const router = useRouter()
 // 折叠菜单按钮
 const { siderCollapsed } = storeToRefs(appStore)
 // 自动折叠菜单
-const handleResize = throttle(
-  () => {
-    const { width } = document.body.getBoundingClientRect()
-    if (siderCollapsed.value) return
-    if (width <= 1400) {
-      siderCollapsed.value = true
-    }
-  },
-  500,
-  { leading: true }
-)
+const handleResize = () => {
+  const { width } = document.body.getBoundingClientRect()
+  siderCollapsed.value = width <= 1400
+}
 handleResize()
-window.addEventListener('resize', handleResize)
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
+useEventListener(window, 'resize', useThrottleFn(handleResize, 500, true))
 
 // 面包屑
 const breadcrumbList = computed(() => {
