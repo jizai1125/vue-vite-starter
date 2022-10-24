@@ -13,8 +13,8 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 ## 分支说明
 
 - [main](https://github.com/jizai1125/vue3-vite2-ts-template/tree/main)：基础配置
-- [h5 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/h5)：在基础配置上集成 h5 移动端相关的配置
 - [admin 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/admin)：在基础配置上集成管理台相关的配置
+- [h5 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/h5)：在基础配置上集成 h5 移动端相关的配置
 
 ## main 分支集成说明
 
@@ -28,10 +28,6 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 **相关文档：**
 
 - [vue-vite-starter 基础搭建文档](https://jizai-.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
-
-**相关文档：**
-
-- [vue3-vite2-ts-template 基础搭建文档](https://jizai.notion.site/vue3-vite-ts-template-7f2ee6363e2649ae996418819b9df8ea)
 
 ## admin 分支集成说明
 
