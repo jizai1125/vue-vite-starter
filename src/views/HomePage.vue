@@ -51,7 +51,6 @@ const changeUserData = (user: object) => {
 
 <style lang="scss" scoped>
 .home-container {
-  background-color: #fefef8;
   text-align: center;
   .title {
     margin: 0;
