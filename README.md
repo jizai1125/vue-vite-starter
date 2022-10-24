@@ -62,6 +62,8 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 - [vue-vite-starter【admin 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
 
+<img src="https://gitee.com/aka-jizai/PicPlus/raw/master/image-20221021113346990.png" style="zoom:50%;" />
+
 ## 推荐开发工具
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
