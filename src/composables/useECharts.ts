@@ -1,4 +1,4 @@
-import { onMounted, shallowReactive } from 'vue'
+import { onMounted, onUnmounted, shallowReactive } from 'vue'
 import * as echarts from 'echarts'
 import type { EChartsOption, ECharts } from 'echarts'
 import { merge } from 'lodash-es'
@@ -39,7 +39,9 @@ export default function useECharts(
     })
   }
   useEventListener(window, 'resize', useThrottleFn(_resize, 500, true))
-
+  onUnmounted(() => {
+    _dispose()
+  })
   // 初始渲染
   function _render(option: EChartsOption = {}): ECharts {
     let targetOption = option
@@ -71,7 +73,7 @@ export default function useECharts(
     _render(opts as EChartsOption)
   }
   function _resize() {
-    console.log('[useECharts resize]', domSelectors)
+    console.log('[useECharts] resize', domSelectors)
     chartCtx.instance?.resize()
   }
   return chartCtx
