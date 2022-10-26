@@ -49,6 +49,7 @@ export default function useECharts(
       const el = document.querySelector(domSelectors) as HTMLElement
       if (!el) {
         console.warn('[useECharts] DOM 获取失败, 请确保在 DOM 挂载后调用！')
+        return
       }
       chartCtx.instance = echarts.init(el)
       if (!isRenderImmediate) {
