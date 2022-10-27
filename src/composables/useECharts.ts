@@ -24,7 +24,6 @@ export default function useECharts(
   initOption: EChartsOption = {},
   isRenderImmediate = true
 ) {
-  // 使用 shallowReactive 包裹
   const chartCtx = shallowReactive<ChartContext>({
     instance: undefined,
     render: _render,
