@@ -1,4 +1,5 @@
 import { onMounted, onUnmounted, shallowReactive } from 'vue'
+import type { ShallowReactive } from 'vue'
 import * as echarts from 'echarts'
 import type { EChartsOption, ECharts } from 'echarts'
 import { merge } from 'lodash-es'
@@ -13,9 +14,9 @@ interface ChartContext {
   resize: () => void
 }
 /**
- * echarts 渲染
- * @param domSelectors dom 选择器 例如 #id /.class ...
- * @param initOption echarts option
+ * ECharts
+ * @param domSelectors DOM 选择器 例如 #id /.class ...
+ * @param initOption ECharts option
  * @param isRenderImmediate 是否立即渲染
  * @returns ChartContext
  */
@@ -23,7 +24,7 @@ export default function useECharts(
   domSelectors: string,
   initOption: EChartsOption = {},
   isRenderImmediate = true
-) {
+): ShallowReactive<ChartContext> {
   const chartCtx = shallowReactive<ChartContext>({
     instance: undefined,
     render: _render,
@@ -53,7 +54,7 @@ export default function useECharts(
       chartCtx.instance = echarts.init(el)
       if (!isRenderImmediate) {
         // 若初始时未渲染，需与初始配置合并
-        targetOption = merge(initOption, option)
+        targetOption = merge({}, initOption, option)
       }
     }
     chartCtx.instance.setOption(targetOption)
@@ -81,110 +82,116 @@ export default function useECharts(
 
 /**
  * 折线图
- * @param domSelectors dom 选择器 例如 #id/.class/div
+ * @param domSelectors DOM 选择器 例如 #id /.class ...
+ * @param initOption ECharts option
+ * @param isRenderImmediate 是否立即渲染
  * @returns ChartContext
  */
-export function useLineChart(domSelectors: string, isRenderImmediate?: boolean) {
-  const defaultLineOpt: EChartsOption = {
-    grid: {
-      left: '5%',
-      right: '5%',
-      top: '10%',
-      bottom: '10%',
-      containLabel: true
+export function useLineChart(
+  domSelectors: string,
+  option: EChartsOption = {},
+  isRenderImmediate?: boolean
+): ShallowReactive<ChartContext> {
+  return useECharts(domSelectors, merge({}, defaultLineOpt, option), isRenderImmediate)
+}
+const defaultLineOpt: EChartsOption = {
+  grid: {
+    left: '5%',
+    right: '5%',
+    top: '10%',
+    bottom: '10%',
+    containLabel: true
+  },
+  tooltip: {
+    trigger: 'axis'
+  },
+  xAxis: {
+    type: 'category',
+    data: [],
+    boundaryGap: false,
+    axisTick: {
+      alignWithLabel: true,
+      lineStyle: {
+        width: 2,
+        color: '#92ACE4',
+        opacity: 0.5
+      }
     },
-    tooltip: {
-      trigger: 'axis'
+    axisLabel: {
+      color: '#97A3BB',
+      fontSize: 16,
+      fontFamily: 'PingFang SC'
     },
-    xAxis: {
-      type: 'category',
+    axisLine: {
+      show: false
+    }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      fontSize: 16,
+      margin: 20,
+      fontFamily: 'Noto Sans S Chinese',
+      color: '#97A3BB'
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#92ACE4',
+        opacity: 0.3
+      }
+    }
+  },
+  series: [
+    {
       data: [],
-      boundaryGap: false,
-      axisTick: {
-        alignWithLabel: true,
-        lineStyle: {
-          width: 2,
-          color: '#92ACE4',
-          opacity: 0.5
-        }
-      },
-      axisLabel: {
-        color: '#97A3BB',
-        fontSize: 16,
-        fontFamily: 'PingFang SC'
-      },
-      axisLine: {
-        show: false
-      }
-    },
-    yAxis: {
-      type: 'value',
-      axisLine: {
-        show: false
-      },
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        fontSize: 16,
-        margin: 20,
-        fontFamily: 'Noto Sans S Chinese',
-        color: '#97A3BB'
-      },
-      splitLine: {
-        lineStyle: {
-          color: '#92ACE4',
-          opacity: 0.3
-        }
-      }
-    },
-    series: [
-      {
-        data: [],
-        type: 'line',
-        smooth: true,
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: '#1375FF'
-              },
-              {
-                offset: 1,
-                color: 'rgba(20,118,255, 0.2)'
-              }
-            ]
-          },
-          opacity: 0.3
+      type: 'line',
+      smooth: true,
+      areaStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: '#1375FF'
+            },
+            {
+              offset: 1,
+              color: 'rgba(20,118,255, 0.2)'
+            }
+          ]
         },
-        showSymbol: false,
-        itemStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [
-              {
-                offset: 0,
-                color: '#1375FF'
-              },
-              {
-                offset: 1,
-                color: 'rgba(20,118,255, 0.2)'
-              }
-            ]
-          }
+        opacity: 0.3
+      },
+      showSymbol: false,
+      itemStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            {
+              offset: 0,
+              color: '#1375FF'
+            },
+            {
+              offset: 1,
+              color: 'rgba(20,118,255, 0.2)'
+            }
+          ]
         }
       }
-    ]
-  }
-  return useECharts(domSelectors, defaultLineOpt, isRenderImmediate)
+    }
+  ]
 }
