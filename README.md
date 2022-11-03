@@ -27,7 +27,7 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue-vite-starter 基础搭建文档](https://jizai-.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
+- [vue-vite-starter 基础搭建文档](https://jizai.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
 
 ## admin 分支集成说明
 
@@ -43,7 +43,7 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue-vite-starter【admin 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
+- [vue-vite-starter【admin 分支文档】](https://jizai.notion.site/vue3-vite2-ts-template-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
 
 <img src="https://gitee.com/aka-jizai/PicPlus/raw/master/image-20221021113346990.png" style="zoom:50%;" />
 
@@ -61,7 +61,7 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue-vite-starter 【H5 分支文档】](https://jizai-.notion.site/vue3-vite2-ts-template-H5-59684b7e415949b6939c7afe2ceb73fd)
+- [vue-vite-starter 【H5 分支文档】](https://jizai.notion.site/vue3-vite2-ts-template-H5-59684b7e415949b6939c7afe2ceb73fd)
 
 <img src="https://gitee.com/aka-jizai/PicPlus/raw/master/image-20221024175041304.png" alt="image-20221024175041304" style="zoom:80%;" />
 
