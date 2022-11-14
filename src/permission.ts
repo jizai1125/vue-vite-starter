@@ -1,6 +1,7 @@
 import router from '@/router'
 import { getToken } from '@/utils/auth'
 import useUserStore from '@/store/user'
+
 // 无需权限的路由
 const whiteList = ['/login']
 

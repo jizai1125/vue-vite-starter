@@ -18,5 +18,3 @@ import MainContent from './components/MainContent.vue'
     </n-layout>
   </n-layout>
 </template>
-
-<style scoped></style>

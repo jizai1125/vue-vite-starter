@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layouts/index.vue'
-import NoopView from '@/layouts/NoopView.vue'
+import EmptyView from '@/layouts/EmptyView.vue'
 import { FireOutlined as NestedIcon } from '@vicons/antd'
 import SunSvg from '@/assets/icons/sun.svg'
 
@@ -45,13 +45,13 @@ const nestedRoute: RouteRecordRaw = {
       name: 'NestedMenu3',
       path: 'menu3',
       meta: { title: '一级菜单', icon: SunSvg },
-      component: NoopView,
+      component: EmptyView,
       children: [
         {
           name: 'NestedMenu3-1',
           path: 'menu3-1',
           meta: { title: '二级菜单' },
-          component: NoopView,
+          component: EmptyView,
           children: [
             {
               name: 'NestedMenu3-2',
