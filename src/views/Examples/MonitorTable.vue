@@ -40,7 +40,7 @@ const columns = [
     key: 'name6'
   }
 ]
-const tableData = Array.apply(null, { length: 45 }).map((_, index) => ({
+const tableData = Array.apply(null, { length: 15 }).map((_, index) => ({
   key: index,
   name: `Edward King`,
   name1: `Edward King`,

@@ -1,7 +1,7 @@
 import router from '@/router'
 import { getToken } from '@/utils/auth'
 import useUserStore from '@/store/user'
-// 不需要权限的路由
+// 无需权限的路由
 const whiteList = ['/login']
 
 router.beforeEach(async (to, from) => {
@@ -23,7 +23,7 @@ router.beforeEach(async (to, from) => {
         console.log(accessRoutes)
         accessRoutes.forEach((route) => {
           const removeCb = router.addRoute(route)
-          userStore.addRouteRemoveCallback(removeCb)
+          userStore.addRemoveRouteCb(removeCb)
         })
         return to.fullPath
       }

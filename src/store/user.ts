@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import { constantRoutes } from '@/router'
 import { asyncRoutes } from '@/router'
 import { setToken, removeToken } from '@/utils/auth'
+import { shallowReactive } from 'vue'
 interface IUser {
   userId?: number
   userInfo?: object
@@ -11,18 +12,18 @@ interface IUser {
   // 用户具有的权限路由资源, 后端返回
   authRoutes: string[]
   // 动态添加路由 addRoute 方法返回的回调，供后续删除使用
-  routeRemoveCallback: Array<() => void>
+  removeRouteCallback: Array<() => void>
 }
 
 const userStore = defineStore('user', {
   state: (): IUser => {
-    return {
+    return shallowReactive({
       userId: undefined,
       userInfo: undefined,
       routes: [],
       authRoutes: [],
-      routeRemoveCallback: []
-    }
+      removeRouteCallback: []
+    })
   },
   actions: {
     login(userInfo: object) {
@@ -79,12 +80,12 @@ const userStore = defineStore('user', {
       this.routes = []
       this.authRoutes = []
     },
-    addRouteRemoveCallback(cb: () => void) {
-      this.routeRemoveCallback.push(cb)
+    addRemoveRouteCb(cb: () => void) {
+      this.removeRouteCallback.push(cb)
     },
     resetRouter() {
-      this.routeRemoveCallback.forEach((cb) => cb())
-      this.routeRemoveCallback = []
+      this.removeRouteCallback.forEach((cb) => cb())
+      this.removeRouteCallback = []
     },
     generateRoutes() {
       const accessRoutes = filterAsyncRoutes(this.authRoutes, asyncRoutes)

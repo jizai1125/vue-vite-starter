@@ -11,7 +11,7 @@ export const resolveAssetFile = (filePath: string): string => {
 }
 
 /**
- * 渲染图标 / 图片 为 NIcon 组件
+ * 渲染图标组件/图片为 NIcon 组件
  * @param icon 图标组件 / 图片地址
  * @param props 图标组件 props / img 属性
  * @returns VNode
