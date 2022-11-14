@@ -24,7 +24,7 @@ service.interceptors.request.use(
     return Object.assign(config, option)
   },
   (error) => {
-    console.log(error) // for debug
+    console.log('[request error]', error) // for debug
     return Promise.reject(error)
   }
 )
@@ -43,7 +43,7 @@ service.interceptors.response.use(
     return Promise.resolve(resData)
   },
   (error) => {
-    console.log('err' + error) // for debug
+    console.log('[reponse error]', error) // for debug
     return Promise.reject(error)
   }
 )

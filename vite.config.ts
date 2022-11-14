@@ -7,8 +7,10 @@ import viteSvgIcons from 'vite-plugin-svg-icons'
 // 可视化分析打包结果
 // import { visualizer } from 'rollup-plugin-visualizer'
 import colors from 'colors-console'
+// 组件自动引入
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 const resolvePath = (path) => resolve(__dirname, path)
 
@@ -29,6 +31,7 @@ export default defineConfig(({ mode }) => {
         // Specify symbolId format
         symbolId: 'icon-[dir]-[name]'
       }),
+      createHtmlPlugin(),
       legacy({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']

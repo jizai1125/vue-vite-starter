@@ -1,13 +1,14 @@
 import router from '@/router'
 import { getToken } from '@/utils/auth'
 import useUserStore from '@/store/user'
+import { isNavigationFailure } from 'vue-router'
 
 // 无需权限的路由
 const whiteList = ['/login']
 
 router.beforeEach(async (to, from) => {
-  console.log('from >>>', from.fullPath)
-  console.log('to >>>', to.fullPath)
+  console.log('[beforeEach from]', from.fullPath)
+  console.log('[beforeEach to]', to.fullPath)
   const userStore = useUserStore()
   const hasToken = getToken()
   console.info('判断是否有 token', hasToken)
@@ -33,5 +34,12 @@ router.beforeEach(async (to, from) => {
     if (!whiteList.includes(to.path)) {
       return { path: '/login', query: { redirect: to.fullPath } }
     }
+  }
+})
+
+router.afterEach((to, from, failure) => {
+  if (!isNavigationFailure(failure)) {
+    const title = import.meta.env.VITE_TITLE
+    document.title = [to.meta.title, title].join(' · ')
   }
 })
