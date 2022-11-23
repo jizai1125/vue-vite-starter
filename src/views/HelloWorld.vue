@@ -3,11 +3,7 @@ import useAppStore from '@/store'
 import { storeToRefs } from 'pinia'
 import { resolveAssetFile } from '@/utils'
 import SvgIcon from '@/components/SvgIcon/index.vue'
-import { getList } from '@/api'
-
-getList().then((res: any) => {
-  console.log(res, res.com)
-})
+import { getExpressData } from '@/api'
 
 const store = useAppStore()
 // 解构会失去响应，可以用 storeToRefs 包裹，类似 vue 的 toRefs
@@ -26,11 +22,17 @@ const changeUserData = (user: object) => {
   //   state.user.username = 'test'
   // })
 }
+
+getExpressData({
+  type: 'shunfeng',
+  postid: 'SF6091240032008'
+}).then((res) => {
+  console.log(res, res.com)
+})
 </script>
 
 <template>
-  <img alt="Vue logo" :src="resolveAssetFile('logo.png')" />
-  <img alt="Vue logo" :src="resolveAssetFile('icons/logo.svg')" style="width: 100px" />
+  <img alt="Vue logo" :src="resolveAssetFile('logo.png')" style="width: 30px" />
   <svg-icon name="logo" size="50" />
   <svg-icon name="sun" size="30" />
   <h1>{{ title }}</h1>
