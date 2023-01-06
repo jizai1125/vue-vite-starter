@@ -37,9 +37,9 @@ router.beforeEach(async (to, from) => {
   }
 })
 
+const title = import.meta.env.VITE_TITLE
 router.afterEach((to, from, failure) => {
   if (!isNavigationFailure(failure)) {
-    const title = import.meta.env.VITE_TITLE
     document.title = [to.meta.title, title].join(' · ')
   }
 })
