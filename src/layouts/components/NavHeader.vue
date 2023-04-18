@@ -60,8 +60,7 @@ const onDropdownSelect = async (key: string | number, option: DropdownOption) =>
       break
   }
 }
-const goToGithub = () =>
-  window.open('https://github.com/jizai1125/vue3-vite2-ts-template/tree/admin')
+const goToGithub = () => window.open('https://github.com/jizai1125/vue-vite-starter/tree/admin')
 </script>
 
 <template>
@@ -98,7 +97,7 @@ const goToGithub = () =>
           class="avatar"
           round
           size="large"
-          src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" />
+          src="https://avatars.githubusercontent.com/u/33979706?v=4" />
       </n-dropdown>
     </n-space>
   </n-layout-header>

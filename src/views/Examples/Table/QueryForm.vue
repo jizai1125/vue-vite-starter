@@ -35,34 +35,35 @@ const handleValidateClick = (e: MouseEvent) => {
 </script>
 
 <template>
-  <n-space justify="space-between">
-    <n-form
-      ref="formRef"
-      inline
-      :label-width="80"
-      label-placement="left"
-      :model="formValue"
-      :rules="rules">
-      <n-form-item label="组件名称" path="name">
+  <n-form
+    ref="formRef"
+    inline
+    :label-width="80"
+    label-align="right"
+    label-placement="left"
+    :model="formValue"
+    :rules="rules">
+    <n-grid :x-gap="24" item-responsive>
+      <n-form-item-gi span="24 400:10 800:6" label="组件名称" path="name">
         <n-input v-model:value="formValue.name" placeholder="请输入" />
-      </n-form-item>
-      <n-form-item label="运行时间" path="time">
+      </n-form-item-gi>
+      <n-form-item-gi span="24 400:14 800:10" label="运行时间" path="time">
         <n-date-picker v-model:value="formValue.time" type="daterange" clearable />
-      </n-form-item>
-      <n-form-item>
+      </n-form-item-gi>
+      <n-form-item-gi span="24 400:24 800:8">
         <n-space>
           <n-button round type="info" @click="handleValidateClick"> 查询 </n-button>
           <n-button round @click="handleValidateClick"> 重置 </n-button>
+          <n-button round type="info">
+            <template #icon>
+              <n-icon :component="ExportIcon"> </n-icon>
+            </template>
+            导出
+          </n-button>
         </n-space>
-      </n-form-item>
-    </n-form>
-    <n-button round type="info">
-      <template #icon>
-        <n-icon :component="ExportIcon"> </n-icon>
-      </template>
-      导出
-    </n-button>
-  </n-space>
+      </n-form-item-gi>
+    </n-grid>
+  </n-form>
 </template>
 
 <style lang="scss" scoped></style>

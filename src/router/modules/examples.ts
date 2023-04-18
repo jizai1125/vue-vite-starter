@@ -5,7 +5,7 @@ import { DribbbleOutlined as ExamplesIcon } from '@vicons/antd'
 const examplesRoute: RouteRecordRaw = {
   name: 'Examples',
   path: '/examples',
-  redirect: '/examples/example1',
+  redirect: '/examples/table',
   meta: {
     title: 'examples',
     icon: ExamplesIcon,
@@ -15,11 +15,19 @@ const examplesRoute: RouteRecordRaw = {
   children: [
     {
       name: 'Table',
-      path: 'example1',
+      path: 'table',
       meta: {
-        title: 'table 示例'
+        title: 'Table 示例'
       },
-      component: () => import('@/views/Examples/MonitorTable.vue')
+      component: () => import('@/views/Examples/Table/index.vue')
+    },
+    {
+      name: 'Upload',
+      path: 'upload',
+      meta: {
+        title: 'Upload 示例'
+      },
+      component: () => import('@/views/Examples/Upload/index.vue')
     }
   ]
 }

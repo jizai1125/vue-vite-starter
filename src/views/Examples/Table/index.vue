@@ -53,7 +53,7 @@ const tableData = Array.apply(null, { length: 15 }).map((_, index) => ({
 </script>
 
 <template>
-  <div class="widget-monitor">
+  <div class="table-root">
     <query-form></query-form>
     <n-data-table
       :columns="columns"
@@ -67,7 +67,7 @@ const tableData = Array.apply(null, { length: 15 }).map((_, index) => ({
 </template>
 
 <style lang="scss" scoped>
-.widget-monitor {
+.table-root {
   padding: 20px 17px;
   background: #fff;
 }
