@@ -8,10 +8,12 @@ export default defineStore('app', {
       siderWidth: 276,
       // 侧边菜单栏折叠后宽度
       siderCollapsedWidth: 80,
+      // 侧边菜单栏自动折叠的边界宽度
+      siderCollapsedScreenWidth: 1400,
       // 侧边菜单栏折叠状态
       siderCollapsed: false,
-      // 侧边菜单栏折叠状态 - 折叠动画完成后才变化
-      siderCollapsedEnd: false,
+      // 侧边菜单栏折叠状态（折叠动画完成后才变化）
+      siderCollapsedEndFlag: false,
       // 全局 loading
       globalLoading: false
     }
@@ -22,8 +24,8 @@ export default defineStore('app', {
     }
   },
   actions: {
-    setSiderCollapsedEnd() {
-      this.siderCollapsedEnd = !this.siderCollapsedEnd
+    toggleSiderCollapsedEnd() {
+      this.siderCollapsedEndFlag = !this.siderCollapsedEndFlag
     }
   }
 })

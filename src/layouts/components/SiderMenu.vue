@@ -83,8 +83,8 @@ const menuOpts = computed(() => {
     :native-scrollbar="false"
     collapse-mode="width"
     show-trigger="bar"
-    @after-enter="appStore.setSiderCollapsedEnd"
-    @after-leave="appStore.setSiderCollapsedEnd">
+    @after-enter="appStore.toggleSiderCollapsedEnd"
+    @after-leave="appStore.toggleSiderCollapsedEnd">
     <router-link to="/" #="{ navigate, href }" custom>
       <n-a class="logo" :href="href" @click="navigate">
         <svg-icon name="logo" :size="siderCollapsed ? 40 : 70" />

@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
-import { useFullscreen, useEventListener, useThrottleFn } from '@vueuse/core'
+import { useFullscreen } from '@vueuse/core'
 import useAppStore from '@/store/app'
 import useUserStore from '@/store/user'
 import { useRoute, useRouter } from 'vue-router'
@@ -21,13 +21,6 @@ const route = useRoute()
 const router = useRouter()
 // 折叠菜单按钮
 const { siderCollapsed } = storeToRefs(appStore)
-// 自动折叠菜单
-const handleResize = () => {
-  const { width } = document.body.getBoundingClientRect()
-  siderCollapsed.value = width <= 1400
-}
-handleResize()
-useEventListener(window, 'resize', useThrottleFn(handleResize, 500, true))
 
 // 面包屑
 const breadcrumbList = computed(() => {
