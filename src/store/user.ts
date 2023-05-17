@@ -12,7 +12,7 @@ interface IUser {
   // 用户具有的权限路由资源, 后端返回
   authRoutes: string[]
   // 动态添加路由 addRoute 方法返回的回调，供后续删除使用
-  removeRouteCallback: Array<() => void>
+  toBeRemoveRouteCbs: Array<() => void>
 }
 
 const userStore = defineStore('user', {
@@ -22,7 +22,7 @@ const userStore = defineStore('user', {
       userInfo: undefined,
       routes: [],
       authRoutes: [],
-      removeRouteCallback: []
+      toBeRemoveRouteCbs: []
     })
   },
   actions: {
@@ -80,14 +80,11 @@ const userStore = defineStore('user', {
       this.routes = []
       this.authRoutes = []
     },
-    addRemoveRouteCb(cb: () => void) {
-      this.removeRouteCallback.push(cb)
-    },
     resetRouter() {
-      this.removeRouteCallback.forEach((cb) => cb())
-      this.removeRouteCallback = []
+      this.toBeRemoveRouteCbs.forEach((cb) => cb())
+      this.toBeRemoveRouteCbs = []
     },
-    generateRoutes() {
+    generateAccessRoutes() {
       const accessRoutes = filterAsyncRoutes(this.authRoutes, asyncRoutes)
       this.routes = constantRoutes.concat(accessRoutes)
       return accessRoutes

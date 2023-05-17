@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, Method } from 'axios'
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
 
 const baseURL = import.meta.env.VITE_API_URL
 
@@ -36,7 +36,8 @@ service.interceptors.response.use(
     // 自定义
     // if (resData?.status !== 200) {
     //   if (resData.status === 401) {
-    //     // 登录超时,重新登录
+    //     // 登录过期,重新登录
+    //    removeToken()
     //   }
     //   return Promise.reject(resData)
     // }

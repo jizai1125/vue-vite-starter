@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { h, computed } from 'vue'
-import type { MenuOption } from 'naive-ui'
+import { h, computed, type VNodeChild } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRoute, RouteMeta, RouteRecordRaw, RouterLink } from 'vue-router'
+import { type MenuOption } from 'naive-ui'
 import useAppStore from '@/store/app'
 import useUserStore from '@/store/user'
-import { useRoute, RouteMeta, RouteRecordRaw, RouterLink } from 'vue-router'
 import { renderNIcon } from '@/utils'
 
 type IMenuOption = MenuOption & {
@@ -21,22 +21,23 @@ const activeMenuKey = computed(() => {
   return route.meta.activeMenu || route.path
 })
 // 批量渲染菜单 label
-const renderMenuLabel = (option: IMenuOption) => {
-  // 如果存在子菜单，则点击不跳转路由
-  if (option.children) return option.label
+const renderMenuLabel = (option: MenuOption): VNodeChild => {
+  // 如果存在子菜单，则渲染为普通文本，点击不跳转路由
+  if (option.children) return option.label as VNodeChild
   return h(
     RouterLink,
     {
-      to: option.key
+      to: option.key as string
     },
     { default: () => option.label }
   )
 }
 // 批量渲染菜单 icon
-const renderMenuIcon = (option: IMenuOption) => {
-  const routeMeta = option.meta
+const renderMenuIcon = (option: MenuOption) => {
+  const routeMeta = option.meta as RouteMeta
+  // icon 不存在，返回 true 保持图标占位缩进
   if (!routeMeta.icon) return true
-  const isActive = activeMenuKey.value.match(option.key)
+  const isActive = activeMenuKey.value.match(option.key as string)
   const color = isActive ? '#09A6FF' : '#47505E'
   const icon = isActive ? routeMeta.activeIcon : routeMeta.icon
   return renderNIcon(icon || routeMeta.icon, { color })

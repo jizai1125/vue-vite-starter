@@ -3,7 +3,7 @@ import { getToken } from '@/utils/auth'
 import useUserStore from '@/store/user'
 import { isNavigationFailure } from 'vue-router'
 
-// 无需权限的路由
+// 路由白名单
 const whiteList = ['/login']
 
 router.beforeEach(async (to, from) => {
@@ -11,7 +11,7 @@ router.beforeEach(async (to, from) => {
   console.log('[beforeEach to]', to.fullPath)
   const userStore = useUserStore()
   const hasToken = getToken()
-  console.info('判断是否有 token', hasToken)
+  console.info('[hasToken]', hasToken)
   if (hasToken) {
     if (to.path === '/login') {
       return from.fullPath
@@ -19,14 +19,16 @@ router.beforeEach(async (to, from) => {
       // TODO 获取用户信息
       await userStore.getUserInfo()
       const hasRoutes = userStore.routes && userStore.routes.length > 0
-      console.info('判断是否生成路由表', hasRoutes)
+      console.info('[hasRoutes]', hasRoutes)
       if (!hasRoutes) {
-        const accessRoutes = userStore.generateRoutes()
+        const accessRoutes = userStore.generateAccessRoutes()
         console.log(accessRoutes)
+        const toBeRemoveRouteCbs = new Set<() => void>()
         accessRoutes.forEach((route) => {
-          const removeCb = router.addRoute(route)
-          userStore.addRemoveRouteCb(removeCb)
+          const cb = router.addRoute(route)
+          toBeRemoveRouteCbs.add(cb)
         })
+        userStore.toBeRemoveRouteCbs = [...toBeRemoveRouteCbs]
         return to.fullPath
       }
     }

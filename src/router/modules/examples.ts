@@ -7,7 +7,7 @@ const examplesRoute: RouteRecordRaw = {
   path: '/examples',
   redirect: '/examples/table',
   meta: {
-    title: 'examples',
+    title: '示例',
     icon: ExamplesIcon,
     sort: 99
   },

@@ -13,7 +13,7 @@ export default defineStore('app', {
       // 侧边菜单栏折叠状态
       siderCollapsed: false,
       // 侧边菜单栏折叠状态（折叠动画完成后才变化）
-      siderCollapsedEndFlag: false,
+      siderCollapsedEnd: false,
       // 全局 loading
       globalLoading: false
     }
@@ -25,7 +25,7 @@ export default defineStore('app', {
   },
   actions: {
     toggleSiderCollapsedEnd() {
-      this.siderCollapsedEndFlag = !this.siderCollapsedEndFlag
+      this.siderCollapsedEnd = !this.siderCollapsedEnd
     }
   }
 })
