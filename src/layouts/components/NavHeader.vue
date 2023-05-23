@@ -65,14 +65,15 @@ const goToGithub = () => window.open('https://github.com/jizai1125/vue-vite-star
         size="18"
         @click="() => (siderCollapsed = !siderCollapsed)"></n-icon>
       <n-breadcrumb class="breadcrumb">
-        <n-breadcrumb-item v-for="routeItem in breadcrumbList" :key="routeItem.path">
-          <router-link :to="routeItem.path">
-            {{ routeItem.meta.title }}
-          </router-link>
-        </n-breadcrumb-item>
+        <transition-group name="breadcrumb">
+          <n-breadcrumb-item v-for="routeItem in breadcrumbList" :key="routeItem.path">
+            <router-link :to="routeItem.path">
+              {{ routeItem.meta.title }}
+            </router-link>
+          </n-breadcrumb-item>
+        </transition-group>
       </n-breadcrumb>
     </n-space>
-
     <n-space class="header-right" align="center">
       <n-tooltip placement="bottom">
         <template #trigger>
@@ -97,6 +98,18 @@ const goToGithub = () => window.open('https://github.com/jizai1125/vue-vite-star
 </template>
 
 <style lang="scss" scoped>
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all 0.5s ease;
+}
+.breadcrumb-enter-from,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.breadcrumb-leave-active {
+  position: absolute;
+}
 .layout-header {
   display: flex;
   align-items: center;

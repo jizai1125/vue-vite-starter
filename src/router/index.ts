@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layouts/index.vue'
 import moduleRoutes from './modules'
 import { DashboardOutlined as DashbordIcon } from '@vicons/antd'
-// 权限路由表，后续会根据用户权限动态添加到 vue router
+// 动态路由表，涉及权限，后续会根据用户具有的权限来过滤后动态添加到 vue-router 中
 export const asyncRoutes: RouteRecordRaw[] = [
   {
     name: 'Layout',
@@ -15,7 +15,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         name: 'Dashbord',
         path: '/dashboard',
         meta: {
-          title: 'Dashboard',
+          title: '总览',
           icon: DashbordIcon
         },
         component: () => import('@/views/Dashboard/index.vue')
@@ -25,7 +25,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
   ...moduleRoutes
 ]
 
-// 无需权限的路由表
+// 默认路由表，权限无关的路由
 export const constantRoutes: RouteRecordRaw[] = [
   {
     name: 'Login',

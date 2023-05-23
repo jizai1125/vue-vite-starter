@@ -80,7 +80,7 @@ const trendCardList = [
 const lineChart = useLineChart('#lineChart')
 const chartData = ref<any[]>([])
 watch(
-  () => appStore.siderCollapsedEndFlag,
+  () => appStore.siderCollapsedEnd,
   () => {
     lineChart.resize()
   }
