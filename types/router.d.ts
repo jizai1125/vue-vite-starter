@@ -11,7 +11,7 @@ declare module 'vue-router' {
     sort?: number
     // 菜单图标组件 / 图片地址
     icon?: Component | string
-    // 菜单选中的图片地址
+    // 激活菜单的图标组件 / 图片地址
     activeIcon?: string
     // 指定激活菜单的路由
     activeMenu?: string
