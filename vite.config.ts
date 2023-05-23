@@ -5,7 +5,7 @@ import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 // 浏览器兼容
 import legacy from '@vitejs/plugin-legacy'
-import viteSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // 可视化分析打包结果
 // import { visualizer } from 'rollup-plugin-visualizer'
 import colors from 'colors-console'
@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       }),
-      viteSvgIcons({
+      createSvgIconsPlugin({
         // 指定 svg 图标文件夹路径
         iconDirs: [resolvePath('src/assets/icons')],
         // Specify symbolId format
