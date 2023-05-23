@@ -28,6 +28,9 @@ const breadcrumbList = computed(() => {
   const matched = route.matched.filter((item) => item.meta.title)
   return matched
 })
+const breadcrumbSeparator = (idx: number) => {
+  return idx === breadcrumbList.value.length - 1 ? '' : '/'
+}
 // 全屏切换
 const { isFullscreen, toggle } = useFullscreen()
 
@@ -66,7 +69,10 @@ const goToGithub = () => window.open('https://github.com/jizai1125/vue-vite-star
         @click="() => (siderCollapsed = !siderCollapsed)"></n-icon>
       <n-breadcrumb class="breadcrumb">
         <transition-group name="breadcrumb">
-          <n-breadcrumb-item v-for="routeItem in breadcrumbList" :key="routeItem.path">
+          <n-breadcrumb-item
+            v-for="(routeItem, idx) in breadcrumbList"
+            :key="routeItem.path"
+            :separator="breadcrumbSeparator(idx)">
             <router-link :to="routeItem.path">
               {{ routeItem.meta.title }}
             </router-link>
