@@ -1,8 +1,6 @@
 <script setup lang="ts">
-defineOptions({
-  name: 'TheTable'
-})
 import QueryForm from './QueryForm.vue'
+defineOptions({ name: 'TheTable' })
 const columns = [
   {
     type: 'selection',

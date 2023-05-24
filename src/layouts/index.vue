@@ -1,14 +1,10 @@
-<script lang="ts">
-export default {
-  name: 'Layout'
-}
-</script>
 <script setup lang="ts">
 import { useEventListener, useThrottleFn } from '@vueuse/core'
 import SiderMenu from './components/SiderMenu.vue'
 import NavHeader from './components/NavHeader.vue'
 import MainContent from './components/MainContent.vue'
 import useAppStore from '@/store/app'
+defineOptions({ name: 'Layout' })
 
 const appStore = useAppStore()
 
