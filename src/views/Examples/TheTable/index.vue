@@ -1,4 +1,7 @@
 <script setup lang="ts">
+defineOptions({
+  name: 'TheTable'
+})
 import QueryForm from './QueryForm.vue'
 const columns = [
   {

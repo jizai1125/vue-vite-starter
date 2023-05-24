@@ -14,20 +14,28 @@ const examplesRoute: RouteRecordRaw = {
   component: Layout,
   children: [
     {
-      name: 'Table',
+      name: 'TheTable',
       path: 'table',
       meta: {
         title: 'Table 示例'
       },
-      component: () => import('@/views/Examples/Table/index.vue')
+      component: () => import('@/views/Examples/TheTable/index.vue')
     },
     {
-      name: 'Upload',
+      name: 'TheUpload',
       path: 'upload',
       meta: {
         title: 'Upload 示例'
       },
-      component: () => import('@/views/Examples/Upload/index.vue')
+      component: () => import('@/views/Examples/TheUpload/index.vue')
+    },
+    {
+      name: 'TheForm',
+      path: 'form',
+      meta: {
+        title: 'Form 示例'
+      },
+      component: () => import('@/views/Examples/TheForm/index.vue')
     }
   ]
 }
