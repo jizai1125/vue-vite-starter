@@ -2,28 +2,26 @@
 import { ref, reactive } from 'vue'
 import { useMessage, type UploadCustomRequestOptions, type UploadFileInfo } from 'naive-ui'
 import axios from 'axios'
+import { type UploadedFileInfo } from './interface'
 
-// 已上传文件信息接口
-interface UploadedFileInfo extends UploadFileInfo {
-  // 文件上传后的响应数据
-  response: { id: number; fileName: string; ossUrl: string; [k: string]: any }
-}
 const message = useMessage()
-// 用于取消请求
-const abortControllerMap = new WeakMap<File, AbortController>()
+// 用于取消请求，file id => abortController
+const abortControllerMap = new Map<UploadFileInfo['id'], AbortController>()
+// 所有文件
+const fileListRef = ref<UploadFileInfo[]>([])
 // 已上传文件列表
 const uploadedFileList = reactive<UploadedFileInfo[]>([])
 const loadingRef = ref(false)
 
 async function customRequest(options: UploadCustomRequestOptions) {
   console.log('[customRequest]', options)
-  let formData = new FormData()
   const fileInfo = options.file
   const file = fileInfo.file as File
-  formData.append('tfile', file, file.name)
   const abortController = new AbortController()
-  abortControllerMap.set(file, abortController)
+  abortControllerMap.set(fileInfo.id, abortController)
   loadingRef.value = true
+  let formData = new FormData()
+  formData.append('tfile', file, file.name)
   try {
     const res = await axios.post(
       '/api/api/application/upload?applicationId=SG20230407JKEAY9BSF6A&bizType=3',
@@ -58,11 +56,7 @@ async function customRequest(options: UploadCustomRequestOptions) {
     options.onError()
   }
   loadingRef.value = false
-  abortControllerMap.delete(file)
-}
-function handleDownload(file: UploadFileInfo) {
-  console.log('[handleDownload]', file)
-  message.success(`下载成功：${file.name}`)
+  abortControllerMap.delete(fileInfo.id)
 }
 // 点击删除\取消按钮触发，返回 false 不会删除该文件
 async function handleRemove(options: {
@@ -71,7 +65,7 @@ async function handleRemove(options: {
 }): Promise<boolean> {
   const fileInfo = options.file
   // 如果文件还在上传，则取消请求，并删除文件
-  const abortController = abortControllerMap.get(fileInfo.file as File)
+  const abortController = abortControllerMap.get(fileInfo.id)
   if (abortController) {
     abortController.abort()
     return true
@@ -79,7 +73,7 @@ async function handleRemove(options: {
   const targetFileIdx = uploadedFileList.findIndex((it) => it.id === fileInfo.id)
   const targetFile = targetFileIdx > -1 ? uploadedFileList[targetFileIdx] : null
   console.log(targetFileIdx, targetFile)
-  if (!targetFile) return true
+  if (!targetFile?.response) return true
   // 请求删除接口
   try {
     const res = await axios.get(`/api/fileStore/deleteById/${targetFile.response.id}`)
@@ -98,15 +92,19 @@ async function handleRemove(options: {
 
 <template>
   <n-upload
+    v-model:file-list="fileListRef"
     show-download-button
     :custom-request="customRequest"
-    @download="handleDownload"
     @remove="handleRemove">
     <n-button :loading="loadingRef">上传文件</n-button>
   </n-upload>
   <n-divider>相关数据</n-divider>
   <n-collapse>
-    <n-collapse-item title="uploadedFileList">
+    <n-collapse-item title="fileListRef (所有文件)">
+      <pre>{{ fileListRef }}</pre>
+    </n-collapse-item>
+    <n-collapse-item title="uploadedFileList（上传成功的文件）">
+      包含自定义字段 <n-text code>response</n-text>（请求的响应数据）
       <pre>{{ uploadedFileList }}</pre>
     </n-collapse-item>
   </n-collapse>

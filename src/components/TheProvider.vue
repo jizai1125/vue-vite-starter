@@ -30,10 +30,12 @@ const themeOverrides: GlobalThemeOverrides = {
 </script>
 <template>
   <n-config-provider :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
-    <n-message-provider>
-      <n-loading-bar-provider>
-        <slot></slot>
-      </n-loading-bar-provider>
-    </n-message-provider>
+    <n-dialog-provider>
+      <n-message-provider>
+        <n-loading-bar-provider>
+          <slot></slot>
+        </n-loading-bar-provider>
+      </n-message-provider>
+    </n-dialog-provider>
   </n-config-provider>
 </template>
