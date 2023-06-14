@@ -37,7 +37,7 @@ const rules: FormRules = {
   ]
 }
 
-const login = (e: MouseEvent) => {
+const login = (e: Event) => {
   e.preventDefault()
   console.log(modelForm)
   formRef.value?.validate(async (error) => {

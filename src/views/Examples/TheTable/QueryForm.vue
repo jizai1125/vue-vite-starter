@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { FormInst } from 'naive-ui'
 import { ExportOutlined as ExportIcon } from '@vicons/antd'
 const formRef = ref<FormInst | null>(null)
-const formValue = ref({
+const formValue = ref<{ name: string; time: [number, number] }>({
   name: '',
   time: [Date.now(), Date.now()]
 })

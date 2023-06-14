@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { DataTableColumn, PaginationProps } from 'naive-ui'
 import QueryForm from './QueryForm.vue'
 defineOptions({ name: 'TheTable' })
-const columns = [
+const columns: DataTableColumn[] = [
   {
     type: 'selection',
     disabled(row: any) {
@@ -41,6 +42,8 @@ const columns = [
     key: 'name6'
   }
 ]
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* @ts-ignore */
 const tableData = Array.apply(null, { length: 15 }).map((_, index) => ({
   key: index,
   name: `Edward King`,
@@ -61,8 +64,8 @@ const tableData = Array.apply(null, { length: 15 }).map((_, index) => ({
       :data="tableData"
       :pagination="{
         pageSize: 10,
-        'show-size-picker': true,
-        'show-quick-jumper': true
+        showSizePicker: true,
+        showQuickJumper: true
       }"></n-data-table>
   </div>
 </template>
