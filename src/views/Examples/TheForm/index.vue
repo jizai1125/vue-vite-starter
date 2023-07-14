@@ -1,14 +1,10 @@
-<script setup lang="ts">
-defineOptions({
-  name: 'TheForm'
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="test"></div>
+  <div class="the-form-root">todo...</div>
 </template>
 
 <style lang="scss" scoped>
-.test {
+.the-form-root {
 }
 </style>

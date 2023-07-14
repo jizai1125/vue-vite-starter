@@ -9,7 +9,7 @@ const examplesRoute: RouteRecordRaw = {
   meta: {
     title: '示例',
     icon: ExamplesIcon,
-    sort: 99
+    sort: 3
   },
   component: Layout,
   children: [
