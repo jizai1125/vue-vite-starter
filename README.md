@@ -4,17 +4,17 @@
 
 利用 [degit](https://github.com/Rich-Harris/degit) 工具快速克隆所需分支，该工具不会将 git 历史克隆下来。
 
-例如克隆 `main` 分支
+例如克隆 `admin` 分支
 
 ```bash
-$ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
+npx degit github:jizai1125/vue-vite-starter#admin my-project
 ```
 
 ## 分支说明
 
-- [main](https://github.com/jizai1125/vue3-vite2-ts-template/tree/main)：基础配置
-- [admin 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/admin)：在基础配置上集成管理台相关的配置
-- [h5 分支](https://github.com/jizai1125/vue3-vite2-ts-template/tree/h5)：在基础配置上集成 h5 移动端相关的配置
+- [main](https://github.com/jizai1125/vue-vite-starter/tree/main)：基础配置
+- [admin 分支](https://github.com/jizai1125/vue-vite-starter/tree/admin)：在基础配置上集成管理台相关的配置
+- [h5 分支](https://github.com/jizai1125/vue-vite-starter/tree/h5)：在基础配置上集成 h5 移动端相关的配置
 
 ## main 分支集成说明
 
@@ -27,11 +27,11 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue-vite-starter 基础搭建文档](https://jizai.notion.site/vue3-vite2-ts-template-8655943992f14b34a1582e02f26b5eba)
+- [vue-vite-starter 基础搭建文档](https://jizai.notion.site/vue-vite-starter-8655943992f14b34a1582e02f26b5eba)
 
 ## admin 分支集成说明
 
-除了 [main 分支集成](https://github.com/jizai1125/vue3-vite2-ts-template#main-分支集成说明) 外，还有集成以下
+除了 [main 分支集成](https://github.com/jizai1125/vue-vite-starter#main-分支集成说明) 外，还有集成以下
 
 - [Naive UI](https://www.naiveui.com/zh-CN/os-theme/docs/installation)  UI 组件库
 - [xicons](https://www.xicons.org/)  图标库 
@@ -43,13 +43,13 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue-vite-starter【admin 分支文档】](https://jizai.notion.site/vue3-vite2-ts-template-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
+- [vue-vite-starter【admin 分支文档】](https://jizai.notion.site/vue-vite-starter-admin-b9a4e222c4f84cb6b6db6df07ff0e862)
 
 <img src="https://gitee.com/aka-jizai/PicPlus/raw/master/image-20221021113346990.png" style="zoom:50%;" />
 
 ## h5 分支集成说明
 
-除了 [main 分支集成](https://github.com/jizai1125/vue3-vite2-ts-template#main-分支集成说明) 外，还有集成以下
+除了 [main 分支集成](https://github.com/jizai1125/vue-vite-starter#main-分支集成说明) 外，还有集成以下
 
 - [vant 组件库](https://vant-contrib.gitee.io/vant/v3/#/zh-CN/quickstart)  移动端组件库
 
@@ -61,7 +61,7 @@ $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
 
 **相关文档：**
 
-- [vue-vite-starter 【H5 分支文档】](https://jizai.notion.site/vue3-vite2-ts-template-H5-59684b7e415949b6939c7afe2ceb73fd)
+- [vue-vite-starter 【H5 分支文档】](https://jizai.notion.site/vue-vite-starter-H5-59684b7e415949b6939c7afe2ceb73fd)
 
 <img src="https://gitee.com/aka-jizai/PicPlus/raw/master/image-20221024175041304.png" alt="image-20221024175041304" style="zoom:80%;" />
 

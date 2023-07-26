@@ -9,7 +9,7 @@ defineOptions({
 </script>
 
 <template>
-  <n-h2>表格表头、表体同步滚动</n-h2>
+  <n-h2>表格表头、表体同步滚动（有遗留问题）</n-h2>
   <n-divider title-placement="left">问题复现</n-divider>
   <n-p>
     复现步骤：1. 鼠标点击表头，此时按键盘左右键，表格横向滚动没问题；
