@@ -5,15 +5,19 @@ declare module 'vue-router' {
   interface RouteMeta {
     // 菜单 & 面包屑 名称
     title?: string
-    // 是否显示为菜单项
+    // 当设为 true 时不在侧边栏显示为菜单项（默认 false）
     hidden?: boolean
-    // 菜单顺序，值越小顺序约靠前，默认值 0
+    // 用于嵌套菜单显示，当设为 true 时总是显示为菜单（默认 true）
+    // false 则当路由只有一个子路由(不为 hidden)时，只显示子路由菜单
+    alwaysShow?: boolean
+    // 菜单顺序，值越小顺序约靠前（默认值 0），需设置在显示为菜单的路由上
     sort?: number
     // 菜单图标组件 / 图片地址
     icon?: Component | string
-    // 激活菜单的图标组件 / 图片地址
+    // 菜单高亮时的图标组件 / 图片地址；可用于在菜单高亮时想指定不同图标
     activeIcon?: string
-    // 指定激活菜单的路由
+    // 指定高亮菜单的路由；例如场景：一个文章的列表页路由为：/article/list，点击文章进入文章详情页，路由为 /article/1，
+    // 这时想在侧边栏高亮文章列表菜单，activeMenu 就可以设为 /article/list
     activeMenu?: string
   }
 }

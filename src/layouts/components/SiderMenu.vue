@@ -54,14 +54,19 @@ function generateMenuOpts(routes: RouteRecordRaw[], parent = '/'): IMenuOption[]
       return acc
     }
     const path = item.path.startsWith('/') ? item.path : parent + item.path
-    const menuOpt: IMenuOption = {
+    let menuOpt: IMenuOption = {
       label: item.meta?.title || '',
       key: path,
       meta: item.meta || {}
     }
     if (item.children && item.children.length) {
-      const tmps = generateMenuOpts(item.children, path + '/')
-      menuOpt.children = tmps
+      const childrenMenus = generateMenuOpts(item.children, path + '/')
+      // 只有一个子路由且 alwaysShow 为 false，则不显示父菜单
+      if (childrenMenus.length === 1 && !item.meta?.alwaysShow) {
+        menuOpt = childrenMenus[0]
+      } else if (childrenMenus.length) {
+        menuOpt.children = childrenMenus
+      }
     }
     acc.push(menuOpt)
     return acc
