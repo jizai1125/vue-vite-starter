@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import type { DataTableColumn, PaginationProps } from 'naive-ui'
-import QueryForm from './QueryForm.vue'
+import type { DataTableColumn } from 'naive-ui'
+import QueryForm, { type FormValue, formValue } from './QueryForm.vue'
+import { ref } from 'vue'
+import CusTableRequest from '@/components/CusTableRequest.vue'
 defineOptions({ name: 'TheTable' })
 const columns: DataTableColumn[] = [
   {
@@ -42,31 +44,23 @@ const columns: DataTableColumn[] = [
     key: 'name6'
   }
 ]
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-/* @ts-ignore */
-const tableData = Array.apply(null, { length: 15 }).map((_, index) => ({
-  key: index,
-  name: `Edward King`,
-  name1: `Edward King`,
-  name2: `Edward King`,
-  name3: `Edward King`,
-  name4: `Edward King`,
-  name5: `Edward King`,
-  name6: `Edward King`
-}))
+
+const tableRef = ref<InstanceType<typeof CusTableRequest>>()
+function handleQuery(value: FormValue) {
+  console.log('handleQuery', value)
+  tableRef.value?.query()
+}
 </script>
 
 <template>
   <div class="table-root">
-    <query-form></query-form>
-    <n-data-table
-      :columns="columns"
-      :data="tableData"
-      :pagination="{
-        pageSize: 10,
-        showSizePicker: true,
-        showQuickJumper: true
-      }"></n-data-table>
+    <query-form @query="handleQuery" @clear="handleQuery"></query-form>
+    <cus-table-request
+      ref="tableRef"
+      method="get"
+      url="/customize-param/variables"
+      :params="formValue"
+      :columns="columns"></cus-table-request>
   </div>
 </template>
 

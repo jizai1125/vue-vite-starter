@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, Method } from 'axios'
-import { getToken, removeToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 
 const baseURL = import.meta.env.VITE_API_URL
 
@@ -49,9 +49,14 @@ service.interceptors.response.use(
   }
 )
 
-type ExtMethod = Extract<Method, 'get' | 'post' | 'put' | 'delete'>
+export type ExtRequestMethod = Extract<Method, 'get' | 'post' | 'put' | 'delete'>
 
-function request<R>(method: ExtMethod, url: string, params?: unknown, config?: AxiosRequestConfig) {
+function request<R>(
+  method: ExtRequestMethod,
+  url: string,
+  params?: unknown,
+  config?: AxiosRequestConfig
+) {
   let result
   switch (method) {
     case 'get':
