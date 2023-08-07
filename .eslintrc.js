@@ -31,6 +31,8 @@ module.exports = {
   ],
   plugins: ['vue', '@typescript-eslint'],
   rules: {
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    'no-empty': ['error', { allowEmptyCatch: true }]
   }
 }
