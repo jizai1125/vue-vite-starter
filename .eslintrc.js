@@ -20,6 +20,15 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended'
   ],
+  overrides: [
+    // 解决全局类型在 .vue 文件中报错问题 xxx is not defined
+    {
+      files: ['*.vue'],
+      rules: {
+        'no-undef': 'off'
+      }
+    }
+  ],
   plugins: ['vue', '@typescript-eslint'],
   rules: {}
 }
