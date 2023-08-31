@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, shallowRef, reactive, useAttrs, computed } from 'vue'
+import type { AxiosRequestConfig } from 'axios'
 import request, { type ExtRequestMethod } from '@/utils/request'
+import { type PaginationInfo } from 'naive-ui'
 defineOptions({
   name: 'CusTableWithRequest'
 })
@@ -18,10 +20,15 @@ const props = withDefaults(
     pageIndexField?: string
     // 每页条数，默认 10
     pageSize?: number
+    pageSizes?: number[]
     // 是否立即请求，默认 true
     immediate?: boolean
+    // 分页查询参数 pageSize \ pageIndex 是否在放在 query
+    queryPagination?: boolean
+    // axios config
+    config?: AxiosRequestConfig
     // 返回结果适配器
-    resAdapter?(res: object): { list: []; total?: number; pages?: number }
+    resAdapter?(res: any): { list: []; total?: number; pages?: number }
   }>(),
   {
     method: 'post',
@@ -29,12 +36,14 @@ const props = withDefaults(
     pageSizeField: 'pageSize',
     pageIndexField: 'pageNum',
     pageSize: 10,
+    pageSizes: () => [10, 20, 30, 40],
     immediate: true,
+    queryPagination: false,
     resAdapter: (res: any) => {
       return {
-        list: res.records,
+        list: res.list,
         total: res.total,
-        pages: res.pages
+        pages: res.page
       }
     }
   }
@@ -44,11 +53,14 @@ const pagination = reactive({
   pageCount: 1,
   pageSize: props.pageSize,
   itemCount: 0,
-  pageSizes: [10, 20, 30, 40],
+  pageSizes: props.pageSizes,
   'show-size-picker': true,
-  'show-quick-jumper': true
+  'show-quick-jumper': true,
+  prefix({ itemCount }: PaginationInfo) {
+    return `总共 ${itemCount} 条数据`
+  }
 })
-const tableData = shallowRef([])
+const tableData = ref([])
 
 const attrs = useAttrs()
 const disablePaigination = computed(
@@ -57,21 +69,34 @@ const disablePaigination = computed(
 const loading = ref(false)
 const handlePageChange = async (currentPage: number = pagination.page) => {
   loading.value = true
-  let params = {
-    ...props.params
-  }
+  let params = props.params
+  let queryParams
+
   if (!disablePaigination.value) {
-    params = {
-      ...params,
-      [props.pageSizeField]: pagination.pageSize,
-      [props.pageIndexField]: currentPage
+    if (props.queryPagination) {
+      queryParams = {
+        [props.pageSizeField]: pagination.pageSize,
+        [props.pageIndexField]: currentPage
+      }
+    } else {
+      params = {
+        ...params,
+        [props.pageSizeField]: pagination.pageSize,
+        [props.pageIndexField]: currentPage
+      }
     }
   }
   try {
     tableData.value = []
-    const result = await request<any>(props.method, props.url, params)
+    const result = await request<any>(props.method, props.url, params, {
+      ...props.config,
+      params: {
+        ...props.config?.params,
+        ...queryParams
+      }
+    })
     const { list, total, pages } = props.resAdapter(result)
-    tableData.value = list
+    tableData.value = list || []
     if (!disablePaigination.value) {
       pagination.page = currentPage
       pagination.pageCount = pages as number
@@ -92,7 +117,8 @@ if (props.immediate) {
 
 defineExpose({
   query: handlePageChange,
-  data: tableData
+  data: tableData,
+  pagination
 })
 </script>
 
@@ -103,7 +129,7 @@ defineExpose({
     :loading="loading"
     :pagination="pagination"
     :data="tableData"
-    :row-key="(row: any) => row.id"
+    :row-key="(r) => r.id"
     v-bind="$attrs"
     @update:page="handlePageChange"
     @update:page-size="handlePageSizeChnage"></n-data-table>

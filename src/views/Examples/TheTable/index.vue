@@ -2,13 +2,25 @@
 import type { DataTableColumn } from 'naive-ui'
 import QueryForm, { type FormValue, formValue } from './QueryForm.vue'
 import { ref } from 'vue'
-import CusTableRequest from '@/components/CusTableRequest.vue'
-defineOptions({ name: 'TheTable' })
+import useCusTableRequest from '@/composables/useCusTableRequest'
+
+const tableRef = ref()
+const { queryTable, pagination } = useCusTableRequest(tableRef)
+
 const columns: DataTableColumn[] = [
   {
     type: 'selection',
     disabled(row: any) {
       return row.name === 'Edward King 3'
+    }
+  },
+  {
+    title: '序号',
+    key: 'no',
+    render(_, i) {
+      if (!pagination.value) return
+      const { page = 1, pageSize } = pagination.value
+      return i + 1 + (page - 1) * pageSize
     }
   },
   {
@@ -44,17 +56,11 @@ const columns: DataTableColumn[] = [
     key: 'name6'
   }
 ]
-
-const tableRef = ref<InstanceType<typeof CusTableRequest>>()
-function handleQuery(value: FormValue) {
-  console.log('handleQuery', value)
-  tableRef.value?.query()
-}
 </script>
 
 <template>
   <div class="table-root">
-    <query-form @query="handleQuery" @clear="handleQuery"></query-form>
+    <query-form @query="() => queryTable()" @clear="() => queryTable()"></query-form>
     <cus-table-request
       ref="tableRef"
       method="get"
