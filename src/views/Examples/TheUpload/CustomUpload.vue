@@ -2,15 +2,14 @@
 import { ref, reactive } from 'vue'
 import { useMessage, type UploadCustomRequestOptions, type UploadFileInfo } from 'naive-ui'
 import axios from 'axios'
-import { type UploadedFileInfo } from './interface'
 
 const message = useMessage()
 // 用于取消请求，file id => abortController
 const abortControllerMap = new Map<UploadFileInfo['id'], AbortController>()
 // 所有文件
-const fileListRef = ref<UploadFileInfo[]>([])
-// 已上传文件列表
-const uploadedFileList = reactive<UploadedFileInfo[]>([])
+// const fileListRef = ref<UploadFileInfo[]>([])
+const fileListRef = defineModel<UploadFileInfo[]>('fileList', { default: () => [] })
+
 const loadingRef = ref(false)
 
 async function customRequest(options: UploadCustomRequestOptions) {
@@ -43,12 +42,8 @@ async function customRequest(options: UploadCustomRequestOptions) {
     if (res.data.isError) {
       throw new Error(res.data.error)
     }
-    const response = res.data.data.pop()
-    uploadedFileList.push({
-      ...fileInfo,
-      status: 'finished',
-      response
-    })
+    options.file.url = res.data
+
     options.onFinish()
     message.success('上传成功')
   } catch (error: any) {
@@ -70,18 +65,17 @@ async function handleRemove(options: {
     abortController.abort()
     return true
   }
-  const targetFileIdx = uploadedFileList.findIndex((it) => it.id === fileInfo.id)
-  const targetFile = targetFileIdx > -1 ? uploadedFileList[targetFileIdx] : null
+  const targetFileIdx = fileListRef.value.findIndex((it) => it.id === fileInfo.id)
+  const targetFile = targetFileIdx > -1 ? fileListRef.value[targetFileIdx] : null
   console.log(targetFileIdx, targetFile)
-  if (!targetFile?.response) return true
+  if (!targetFile) return true
   // 请求删除接口
   try {
-    const res = await axios.get(`/api/fileStore/deleteById/${targetFile.response.id}`)
+    const res = await axios.get(`/api/fileStore/deleteById/${targetFile.id}`)
     if (res.data.isError) {
       throw new Error(res.data.error)
     }
     message.success('删除成功！')
-    uploadedFileList.splice(targetFileIdx, 1)
     return true
   } catch (error: any) {
     message.error(error.message)
@@ -98,14 +92,4 @@ async function handleRemove(options: {
     @remove="handleRemove">
     <n-button :loading="loadingRef">上传文件</n-button>
   </n-upload>
-  <n-divider>相关数据</n-divider>
-  <n-collapse>
-    <n-collapse-item title="fileListRef (所有文件)">
-      <pre>{{ fileListRef }}</pre>
-    </n-collapse-item>
-    <n-collapse-item title="uploadedFileList（上传成功的文件）">
-      包含自定义字段 <n-text code>response</n-text>（请求的响应数据）
-      <pre>{{ uploadedFileList }}</pre>
-    </n-collapse-item>
-  </n-collapse>
 </template>

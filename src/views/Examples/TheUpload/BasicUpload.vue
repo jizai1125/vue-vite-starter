@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { useMessage, useDialog, type UploadFileInfo } from 'naive-ui'
 import axios from 'axios'
-import { ref, reactive, watchEffect, h } from 'vue'
-import { type UploadedFileInfo } from './interface'
+import { ref, watchEffect, h } from 'vue'
 
 const message = useMessage()
 const dialog = useDialog()
 
 const loadingRef = ref(false)
 // 所有文件
-const fileListRef = ref<UploadFileInfo[]>([])
-// 已上传文件列表
-const uploadedFileList = reactive<UploadedFileInfo[]>([])
+// const fileListRef = ref<UploadFileInfo[]>([])
+const fileListRef = defineModel<UploadFileInfo[]>('fileList', { default: () => [] })
 
 watchEffect(() => {
   loadingRef.value = fileListRef.value.some((item) => item.status === 'uploading')
@@ -22,11 +20,8 @@ function handleFinish(options: { file: UploadFileInfo; event?: ProgressEvent }) 
   if (options.file.status === 'finished') {
     console.log((options.event?.target as XMLHttpRequest).response)
     message.success(`${options.file.name} 上传成功！`)
-    const response = (options.event?.target as XMLHttpRequest).response?.data.pop()
-    uploadedFileList.push({
-      ...options.file,
-      response
-    })
+    const response = (options.event?.target as XMLHttpRequest).response?.data
+    options.file.url = response
   }
 }
 
@@ -45,18 +40,17 @@ async function handleRemove(options: {
     duration: 0
   })
   // 请求删除接口
-  const targetFileIdx = uploadedFileList.findIndex((it) => it.id === fileInfo.id)
-  const targetFile = targetFileIdx > -1 ? uploadedFileList[targetFileIdx] : null
+  const targetFileIdx = fileListRef.value.findIndex((it) => it.id === fileInfo.id)
+  const targetFile = targetFileIdx > -1 ? fileListRef.value[targetFileIdx] : null
   console.log(targetFileIdx, targetFile)
-  if (!targetFile?.response) return true
+  if (!targetFile) return true
   try {
-    const res = await axios.get(`/api/fileStore/deleteById/${targetFile.response.id}`)
+    const res = await axios.get(`/api/fileStore/deleteById/${targetFile.id}`)
     if (res.data.isError) {
       throw new Error(res.data.error)
     }
     m.destroy()
     message.success(`${fileInfo.name} 删除成功！`)
-    uploadedFileList.splice(targetFileIdx, 1)
     return true
   } catch (error: any) {
     message.error(error.message)
@@ -114,14 +108,4 @@ async function createConfirmDialog() {
     @download="handleDownload">
     <n-button :loading="loadingRef">上传文件</n-button>
   </n-upload>
-  <n-divider>相关数据</n-divider>
-  <n-collapse>
-    <n-collapse-item title="fileListRef (所有文件)">
-      <pre>{{ fileListRef }}</pre>
-    </n-collapse-item>
-    <n-collapse-item title="uploadedFileList (上传成功的文件)">
-      包含自定义字段 <n-text code>response</n-text>（请求的响应数据）
-      <pre>{{ uploadedFileList }}</pre>
-    </n-collapse-item>
-  </n-collapse>
 </template>

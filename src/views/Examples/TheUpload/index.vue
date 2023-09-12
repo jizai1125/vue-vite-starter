@@ -2,11 +2,13 @@
 import BasicUpload from './BasicUpload.vue'
 import CustomUpload from './CustomUpload.vue'
 import CustomFileList from './CustomFileList.vue'
+import { ref } from 'vue'
 defineOptions({
   name: 'TheUpload'
 })
+const basicFileListRef = ref([])
+const customFileListRef = ref([])
 </script>
-
 <template>
   <n-space vertical>
     <n-card title="基础用法" hoverable>
@@ -17,7 +19,13 @@ defineOptions({
       </n-p>
       <n-p> 2. 取消上传；点击取消按钮时，组件内部会调用 xhr.abort() 方法取消上传请求。</n-p>
       <n-p> 3. 删除文件；在点击删除按钮时通过请求接口删除。 </n-p>
-      <BasicUpload />
+      <BasicUpload v-model:fileList="basicFileListRef" />
+      <n-divider>相关数据</n-divider>
+      <n-collapse>
+        <n-collapse-item title="fileListRef (所有文件)">
+          <pre>{{ basicFileListRef }}</pre>
+        </n-collapse-item>
+      </n-collapse>
     </n-card>
     <n-card title="自定义上传" hoverable>
       <n-p>
@@ -31,7 +39,13 @@ defineOptions({
         remove 事件，在其中获取对应的 abortController，然后调用 abortController.abort() 来取消请求。
       </n-p>
       <n-p> 3. 删除文件；在点击删除按钮时通过请求接口删除。 </n-p>
-      <CustomUpload />
+      <CustomUpload v-model:fileList="customFileListRef" />
+      <n-divider>相关数据</n-divider>
+      <n-collapse>
+        <n-collapse-item title="fileListRef (所有文件)">
+          <pre>{{ customFileListRef }}</pre>
+        </n-collapse-item>
+      </n-collapse>
     </n-card>
     <n-card title="自定义文件列表" hoverable>
       <n-p>1. 上传文件：同基础用法</n-p>

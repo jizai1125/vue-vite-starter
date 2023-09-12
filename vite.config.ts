@@ -21,7 +21,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      vue(),
+      vue({
+        script: {
+          // https://blog.vuejs.org/posts/vue-3-3#definemodel
+          defineModel: true
+        }
+      }),
       Components({
         resolvers: [NaiveUiResolver()]
       }),
