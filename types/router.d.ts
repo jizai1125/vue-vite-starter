@@ -10,8 +10,8 @@ declare module 'vue-router' {
     // 用于嵌套菜单显示，当设为 true 时总是显示为菜单（默认 true）
     // false 则当路由只有一个子路由(不为 hidden)时，只显示子路由菜单
     alwaysShow?: boolean
-    // 菜单顺序，值越小顺序约靠前（默认值 0），需设置在显示为菜单的路由上
-    sort?: number
+    // 菜单自上而下的顺序，值越小顺序约靠前（默认值 0），需设置在显示为菜单的路由上
+    order?: number
     // 菜单图标组件 / 图片地址
     icon?: Component | string
     // 菜单高亮时的图标组件 / 图片地址；可用于在菜单高亮时想指定不同图标

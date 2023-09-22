@@ -72,7 +72,7 @@ function generateMenuOpts(routes: RouteRecordRaw[], parent = '/'): IMenuOption[]
     return acc
   }, [])
   // 菜单排序
-  menus.sort((a, b) => (a.meta.sort || 0) - (b.meta.sort || 0))
+  menus.sort((a, b) => (a.meta.order || 0) - (b.meta.order || 0))
   return menus
 }
 const menuOpts = computed(() => {

@@ -11,7 +11,7 @@ const nestedRoute: RouteRecordRaw = {
   meta: {
     title: '嵌套菜单',
     icon: NestedIcon,
-    sort: 2
+    order: 2
   },
   component: Layout,
   children: [
