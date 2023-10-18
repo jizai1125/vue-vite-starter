@@ -37,13 +37,13 @@ interface FieldConfig {
 }
 
 /**
- * 将字段配置转成统一格式选项
- * @param fieldConf 字段 => 字段描述映射配置，例如：[{ name: '姓名' },{ name: { label: '', format: value => 'xxx'}}, ...]
+ * 将字段配置转成统一格式选项 [{ a: 'a的值' }, ...] => [{label: 'a', value: 'a的值'}, ...]
+ * @param fieldConf 字段 => 字段描述映射配置，例如：{ name: 'name 描述', { name: { label: '', format: value => 'xxx'}, ...}
  * @param valObj 数据对象，例如：{name: '姓名', ...}
  * @param excludeField 排除字段
  * @returns [{ label: 'xxx', value: 'xxx' }, ...]
  */
-export const normalizeOption = (
+export const normalizeOptionByFieldConf = (
   fieldConf: Record<any, string | FieldConfig>,
   valObj: Record<any, any>,
   excludeField: string[] = []
@@ -61,4 +61,18 @@ export const normalizeOption = (
     return acc
   }, [])
   return option
+}
+
+export function normalizeOptions(
+  valObj: Record<string, any>,
+  labelField = 'label',
+  valueField = 'value'
+) {
+  return Object.keys(valObj).reduce((acc, key) => {
+    acc.push({
+      [labelField]: key,
+      [valueField]: valObj[key]
+    })
+    return acc
+  }, [] as any[])
 }
