@@ -61,8 +61,9 @@ function generateMenuOpts(routes: RouteRecordRaw[], parent = '/'): IMenuOption[]
     }
     if (item.children && item.children.length) {
       const childrenMenus = generateMenuOpts(item.children, path + '/')
-      // 只有一个子路由且 alwaysShow 为 false，则不显示父菜单
-      if (childrenMenus.length === 1 && !item.meta?.alwaysShow) {
+      // 只有一个子路由且 alwaysShow 为 false，则不显示父菜单，默认 true
+      const alwaysShow = typeof item.meta?.alwaysShow === 'boolean' ? item.meta?.alwaysShow : true
+      if (childrenMenus.length === 1 && !alwaysShow) {
         menuOpt = childrenMenus[0]
       } else if (childrenMenus.length) {
         menuOpt.children = childrenMenus

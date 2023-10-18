@@ -9,8 +9,7 @@ const bugFixRoutes: RouteRecordRaw = {
   meta: {
     title: 'NaiveUI Bug Fix',
     icon: BugOutlined,
-    order: 4,
-    alwaysShow: true
+    order: 4
   },
   children: [
     {

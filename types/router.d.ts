@@ -8,7 +8,7 @@ declare module 'vue-router' {
     // 当设为 true 时不在侧边栏显示为菜单项（默认 false）
     hidden?: boolean
     // 用于嵌套菜单显示，当设为 true 时总是显示为菜单（默认 true）
-    // false 则当路由只有一个子路由(不为 hidden)时，只显示子路由菜单
+    // 当路由只有一个子路由时，是否只显示子路由菜单（默认 true，即都显示）
     alwaysShow?: boolean
     // 菜单自上而下的顺序，值越小顺序约靠前（默认值 0），需设置在显示为菜单的路由上
     order?: number

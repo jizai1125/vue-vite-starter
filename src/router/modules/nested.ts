@@ -44,7 +44,7 @@ const nestedRoute: RouteRecordRaw = {
     {
       name: 'NestedMenu3',
       path: 'menu3',
-      meta: { title: '一级菜单', icon: SunSvg },
+      meta: { title: '一级菜单', icon: SunSvg, alwaysShow: false },
       component: EmptyView,
       children: [
         {
