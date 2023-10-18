@@ -2,12 +2,15 @@
 
 ## 快速克隆对应分支
 
-利用 [degit](https://github.com/Rich-Harris/degit) 工具快速克隆所需分支，该工具不会将 git 历史克隆下来。
-
-例如克隆 `main` 分支
+方式1（推荐）：利用 [degit](https://github.com/Rich-Harris/degit) 工具快速克隆所需分支，该工具不会将 git 历史克隆下来。例如克隆 `admin` 分支：
 
 ```bash
 $ npx degit github:jizai1125/vue3-vite2-ts-template#main my-project
+```
+
+方式2：使用 git 命令，指定选项 `--depth=1` 是下载单 commit，`-b` 是下载指定分支
+```bash
+git clone --depth=1 -b admin git@github.com:jizai1125/vue-vite-starter.git
 ```
 
 ## 分支说明
