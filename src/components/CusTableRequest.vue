@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { ref, shallowRef, reactive, useAttrs, computed } from 'vue'
+import { ref, reactive, useAttrs, computed } from 'vue'
 import type { AxiosRequestConfig } from 'axios'
 import request, { type ExtRequestMethod } from '@/utils/request'
 import { type PaginationInfo } from 'naive-ui'
-defineOptions({
-  name: 'CusTableWithRequest'
-})
 const props = withDefaults(
   defineProps<{
     // 接口地址

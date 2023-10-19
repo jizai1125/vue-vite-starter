@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CusRemoteSelect: typeof import('./src/components/CusRemoteSelect.vue')['default']
     CusTableRequest: typeof import('./src/components/CusTableRequest.vue')['default']
     CusUpload: typeof import('./src/components/CusUpload.vue')['default']
     NA: typeof import('naive-ui')['NA']

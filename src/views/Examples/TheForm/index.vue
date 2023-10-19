@@ -1,40 +1,59 @@
 <script setup lang="ts">
 import { ref, computed, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { FormInst, useMessage, type UploadFileInfo } from 'naive-ui'
+import { FormInst, useMessage, type UploadFileInfo, type SelectOption } from 'naive-ui'
 import { useForm, formRules, type FormState } from './useForm'
+defineOptions({
+  name: 'TheForm'
+})
 const route = useRoute()
 const message = useMessage()
-const isEditRef = computed(() => route.path === '/goodsManagement/edit')
+const isEditRef = computed(() => !!route.path.match('/examples/form/edit'))
 
 const formRef = ref<FormInst | null>(null)
 const { formState, setFormState, resetFormState } = useForm()
 const loadingRef = ref(false)
-
 // 编辑时获取详情
-const productIdRef = computed(() => route.query.productId as string)
-if (isEditRef.value && productIdRef.value) {
-  // get goods info api
-  const getGoodsInfo = (id: any) => {
-    return Promise.resolve<FormState>({ id })
-  }
-  getGoodsInfo(productIdRef.value).then((res) => {
-    setFormState(res)
-    console.log(formState)
-    if (formState.pic) {
-      const matcher = /([^/]*)$/.exec(formState.pic)
-      const s = matcher ? matcher[0] : ''
-      goodsMainPicRef.value = [
-        {
-          id: s,
-          name: s,
-          status: 'finished',
-          url: formState.pic
-        }
-      ]
+const productIdRef = computed(() => (route.query.productId as string) || '110')
+const goodsInfoRef = ref<FormState>({})
+watchEffect(() => {
+  if (isEditRef.value && productIdRef.value) {
+    // get goods info api
+    const getGoodsInfo = (id: any) => {
+      return Promise.resolve<FormState>({
+        productCategoryId: 1,
+        name: '洗洁精',
+        description: '立白洗洁精，嘎嘎好用！',
+        price: 3,
+        publishStatus: true,
+        spreadStartDate: '2023-10-13 16:22:41',
+        spreadEndDate: '2023-10-28 16:22:44',
+        pic: null,
+        douyinUrl: 'https://lai.gou.cv',
+        shopName: '立白',
+        asyncSelectValue: 1,
+        asyncSelectLabel: 'label-1'
+      })
     }
-  })
-}
+    getGoodsInfo(productIdRef.value).then((res) => {
+      goodsInfoRef.value = res
+      setFormState(res)
+      console.log(formState)
+      if (formState.pic) {
+        const matcher = /([^/]*)$/.exec(formState.pic)
+        const s = matcher ? matcher[0] : ''
+        goodsMainPicRef.value = [
+          {
+            id: s,
+            name: s,
+            status: 'finished',
+            url: formState.pic
+          }
+        ]
+      }
+    })
+  }
+})
 
 // 主图
 const goodsMainPicRef = ref<UploadFileInfo[]>([])
@@ -53,6 +72,7 @@ function reset() {
 async function handleAddBtnClick() {
   await formRef.value?.validate()
   loadingRef.value = true
+  console.log(formState)
   try {
     const formData = {
       ...formState,
@@ -76,6 +96,39 @@ async function handleAddBtnClick() {
 function handleCancelBtnClick() {
   console.log(1)
 }
+
+function fetchOptsApi(keyword: string) {
+  return new Promise<{ total: number; data: Array<{ label: string; value: any }> }>((r) =>
+    setTimeout(() => {
+      let res = []
+      if (keyword) {
+        res = [{ label: keyword, value: keyword }]
+      } else {
+        res = new Array(10)
+          .fill(null)
+          .map((_, i) => ({ label: 'label' + i, value: Date.now() + i }))
+      }
+      r({
+        total: 100,
+        data: res
+      })
+    }, 1000)
+  )
+}
+// 编辑时，添加一个选项
+const extraOption = computed(() => {
+  if (isEditRef.value && goodsInfoRef.value.asyncSelectValue) {
+    return {
+      label: goodsInfoRef.value.asyncSelectLabel,
+      value: goodsInfoRef.value.asyncSelectValue
+    }
+  }
+  return null
+})
+
+function selectResAdapter(res: any, options: SelectOption[]) {
+  return { finished: options.length > 20, list: res.data }
+}
 </script>
 
 <template>
@@ -84,7 +137,7 @@ function handleCancelBtnClick() {
     :model="formState"
     :rules="formRules"
     label-placement="left"
-    label-width="140"
+    label-width="200"
     style="max-width: 1000px; margin: 0 auto">
     <n-grid :cols="2" :x-gap="24">
       <n-form-item-gi label="商品名称" path="name">
@@ -103,7 +156,15 @@ function handleCancelBtnClick() {
           }"
           clearable />
       </n-form-item-gi>
-      <n-form-item-gi span="2" label="商品链接" path="douyinUrl">
+      <n-form-item-gi label="下拉（异步搜索分页加载）" span="2" path="asyncSelectValue">
+        <cus-remote-select
+          v-model:value="formState.asyncSelectValue"
+          :api="fetchOptsApi"
+          :res-adapter="selectResAdapter"
+          :extra-option="extraOption">
+        </cus-remote-select>
+      </n-form-item-gi>
+      <n-form-item-gi label="商品链接" span="2" path="douyinUrl">
         <n-input v-model:value="formState.douyinUrl" clearable />
       </n-form-item-gi>
       <n-form-item-gi label="商品分类" path="productCategoryId">

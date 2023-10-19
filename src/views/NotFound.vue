@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useInterval } from '@vueuse/core'
 import { watchEffect } from 'vue'
-
+const route = useRoute()
+console.log(route.path)
 const router = useRouter()
 const back = () => router.back()
 const { counter, pause } = useInterval(1000, { controls: true })

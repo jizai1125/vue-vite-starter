@@ -3,7 +3,7 @@ import { FormRules } from 'naive-ui'
 
 export type FormState = Utils.PartialNullable<
   {
-    productCategoryId: string
+    productCategoryId: string | number
     name: string
     description: string
     price: number
@@ -13,6 +13,7 @@ export type FormState = Utils.PartialNullable<
     pic: string
     douyinUrl: string
     shopName: string
+    asyncSelectValue: string | number
     [key: string]: unknown
   },
   'publishStatus'
@@ -28,7 +29,8 @@ const initialFormState: FormState = {
   spreadEndDate: null,
   pic: null,
   douyinUrl: null,
-  shopName: null
+  shopName: null,
+  asyncSelectValue: null
 }
 
 export function useForm() {
@@ -64,6 +66,12 @@ export const formRules: FormRules = {
     required: true,
     trigger: 'blur',
     message: '请输入商品介绍'
+  },
+  asyncSelectValue: {
+    required: true,
+    trigger: 'change',
+    type: 'number',
+    message: '请选择'
   },
   productCategoryId: {
     required: true,
