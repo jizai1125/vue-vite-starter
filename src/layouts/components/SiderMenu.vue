@@ -38,9 +38,8 @@ const renderMenuIcon = (option: MenuOption) => {
   // icon 不存在，返回 true 保持图标占位缩进
   if (!routeMeta.icon) return true
   const isActive = activeMenuKey.value.match(option.key as string)
-  const color = isActive ? '#09A6FF' : '#47505E'
   const icon = isActive ? routeMeta.activeIcon : routeMeta.icon
-  return renderNIcon(icon || routeMeta.icon, { color })
+  return renderNIcon(icon || routeMeta.icon)
 }
 
 function generateMenuOpts(routes: RouteRecordRaw[], parent = '/'): IMenuOption[] {

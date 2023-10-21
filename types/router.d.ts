@@ -15,7 +15,7 @@ declare module 'vue-router' {
     // 菜单图标组件 / 图片地址
     icon?: Component | string
     // 菜单高亮时的图标组件 / 图片地址；可用于在菜单高亮时想指定不同图标
-    activeIcon?: string
+    activeIcon?: Component | string
     // 指定高亮菜单的路由；例如场景：一个文章的列表页路由为：/article/list，点击文章进入文章详情页，路由为 /article/1，
     // 这时想在侧边栏高亮文章列表菜单，activeMenu 就可以设为 /article/list
     activeMenu?: string
