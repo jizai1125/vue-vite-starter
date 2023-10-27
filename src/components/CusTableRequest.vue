@@ -106,7 +106,7 @@ const handlePageChange = async (currentPage: number = pagination.page) => {
 }
 const handlePageSizeChnage = (pageSize: number) => {
   pagination.pageSize = pageSize
-  handlePageChange()
+  handlePageChange(1)
 }
 if (props.immediate) {
   handlePageChange()
