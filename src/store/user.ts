@@ -9,8 +9,8 @@ interface IUser {
   userInfo?: object
   // 所有路由表
   routes: RouteRecordRaw[]
-  // 用户具有的权限路由资源, 后端返回
-  authRoutes: string[]
+  // 用户具有的权限路由 path 资源, 后端返回
+  authRoutePaths: string[]
   // 动态添加路由 addRoute 方法返回的回调，供后续删除使用
   toBeRemoveRouteCbs: Array<() => void>
 }
@@ -21,7 +21,7 @@ const userStore = defineStore('user', {
       userId: undefined,
       userInfo: undefined,
       routes: [],
-      authRoutes: [],
+      authRoutePaths: [],
       toBeRemoveRouteCbs: []
     })
   },
@@ -58,10 +58,10 @@ const userStore = defineStore('user', {
         const resData = {
           name: 'jizai',
           role: 'admin',
-          authRoutes: ['/dashboard', '/nested']
+          paths: ['/dashboard', '/nested']
         }
         this.userInfo = resData
-        this.authRoutes = resData.authRoutes
+        this.authRoutePaths = resData.paths
         resolve(resData)
       })
     },
@@ -78,14 +78,14 @@ const userStore = defineStore('user', {
       this.userId = undefined
       this.userInfo = undefined
       this.routes = []
-      this.authRoutes = []
+      this.authRoutePaths = []
     },
     resetRouter() {
       this.toBeRemoveRouteCbs.forEach((cb) => cb())
       this.toBeRemoveRouteCbs = []
     },
     generateAccessRoutes() {
-      const accessRoutes = filterAsyncRoutes(this.authRoutes, asyncRoutes)
+      const accessRoutes = generateAsyncRoutes(this.authRoutePaths, asyncRoutes)
       this.routes = constantRoutes.concat(accessRoutes)
       return accessRoutes
     }
@@ -93,16 +93,84 @@ const userStore = defineStore('user', {
 })
 
 /**
- * 递归过滤异步路由表，返回用户可访问的权限路由表
- * @param authRoutes 权限路由资源 ['/a', ...]
- * @param routes 异步路由表
+ * 处理动态路由表，返回过滤的权限路由表配置
+ * @param authPaths 权限路由 path 资源 ['/a', ...]
+ * @param routes 动态路由表配置
  * @returns
  */
-function filterAsyncRoutes(authRoutes: string[], routes: RouteRecordRaw[]) {
-  // TODO 过滤
-  console.warn('TODO 过滤 authRoutes', authRoutes, routes)
-  const res = routes
-  return res
+function generateAsyncRoutes(authPaths: string[], routes: RouteRecordRaw[]) {
+  // for debug
+  const accessRoutes = filterRoutesByPath(authPaths, routes)
+  console.warn('[generateAsyncRoutes]', accessRoutes)
+  traverseRoutesRedirect(accessRoutes)
+  // 菜单排序
+  accessRoutes.sort((a, b) => (a.meta?.order || 0) - (b.meta?.order || 0))
+  return accessRoutes
+}
+
+/**
+ * 过滤路由表配置
+ * @param authPaths 路由 path 数组
+ * @param routes 路由表配置
+ * @param parentPath 父级路由 path
+ * @returns accessRoutes
+ */
+function filterRoutesByPath(authPaths: string[], routes: RouteRecordRaw[], parentPath?: string) {
+  const accessRoutes: RouteRecordRaw[] = []
+  routes.forEach((route) => {
+    const tmpPath = route.path.startsWith('/')
+      ? route.path
+      : parentPath
+      ? `${parentPath}/${route.path}`
+      : route.path
+    if (authPaths.includes(tmpPath)) {
+      accessRoutes.push(route)
+    }
+    if (route.children) {
+      const children = filterRoutesByPath(authPaths, route.children, tmpPath)
+      if (children.length) {
+        route.children = children
+        accessRoutes.push(route)
+      }
+    }
+  })
+  return accessRoutes
+}
+
+/**
+ * 设置各个根路由模块重定向
+ * @param routes
+ * @returns
+ */
+function traverseRoutesRedirect(routes: RouteRecordRaw[]): RouteRecordRaw[] {
+  routes.forEach((route) => {
+    if (route.children) {
+      const redirect = getRedirectPath(route.children, route.path)
+      route.redirect = redirect
+    }
+  })
+  return routes
+}
+
+/**
+ * 获取根路径重定向路由 path
+ * @param routes
+ * @param parentPath
+ * @returns
+ */
+function getRedirectPath(routes: RouteRecordRaw[], parentPath?: string): string | undefined {
+  if (!routes.length) return
+  const route = routes[0]
+  let fullPath = route.path.startsWith('/')
+    ? route.path
+    : parentPath
+    ? `${parentPath}/${route.path}`
+    : route.path
+  if (route.children) {
+    const tmpPath = getRedirectPath(route.children, fullPath)
+    if (tmpPath) fullPath = tmpPath
+  }
+  return fullPath
 }
 
 export default userStore
