@@ -15,7 +15,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 const resolvePath = (path) => resolve(__dirname, path)
 
 export default defineConfig(({ mode }) => {
-  console.log(colors('cyan', '<<<<<<<<<< VITE_ENV >>>>>>>>>> '), colors('yellow', mode))
+  console.log(colors('cyan', '<<<<<<<<<< VITE_MODE >>>>>>>>>> '), colors('yellow', mode))
   // 可以根据不同环境自定义配置
   const IS_PROD = mode === 'production'
 
