@@ -3,6 +3,8 @@ import { ref, reactive, useAttrs, computed } from 'vue'
 import type { AxiosRequestConfig } from 'axios'
 import request, { type ExtRequestMethod } from '@/utils/request'
 import { type PaginationInfo } from 'naive-ui'
+import axios from 'axios'
+
 const props = withDefaults(
   defineProps<{
     // 接口地址
@@ -20,8 +22,6 @@ const props = withDefaults(
     pageSizes?: number[]
     // 是否立即请求，默认 true
     immediate?: boolean
-    // 分页查询参数 pageSize \ pageIndex 是否在放在 query
-    queryPagination?: boolean
     // axios config
     config?: AxiosRequestConfig
     // 返回结果适配器
@@ -35,7 +35,6 @@ const props = withDefaults(
     pageSize: 10,
     pageSizes: () => [10, 20, 30, 40],
     immediate: true,
-    queryPagination: false,
     resAdapter: (res: any) => {
       return {
         list: res.list,
@@ -64,33 +63,32 @@ const disablePaigination = computed(
   () => typeof attrs.pagination === 'boolean' && !attrs.pagination
 )
 const loading = ref(false)
+let abortControllerInst: AbortController
 const handlePageChange = async (currentPage: number = pagination.page) => {
+  // 取消上次未响应请求
+  if (abortControllerInst) {
+    abortControllerInst.abort()
+  }
+  abortControllerInst = new AbortController()
+  tableData.value = []
+  if (!props.url) {
+    console.warn('[CusTableRequest]: 未配置 url 属性')
+    return
+  }
   loading.value = true
   let params = props.params
-  let queryParams
 
   if (!disablePaigination.value) {
-    if (props.queryPagination) {
-      queryParams = {
-        [props.pageSizeField]: pagination.pageSize,
-        [props.pageIndexField]: currentPage
-      }
-    } else {
-      params = {
-        ...params,
-        [props.pageSizeField]: pagination.pageSize,
-        [props.pageIndexField]: currentPage
-      }
+    params = {
+      ...params,
+      [props.pageSizeField]: pagination.pageSize,
+      [props.pageIndexField]: currentPage
     }
   }
   try {
-    tableData.value = []
     const result = await request<any>(props.method, props.url, params, {
       ...props.config,
-      params: {
-        ...props.config?.params,
-        ...queryParams
-      }
+      signal: abortControllerInst.signal
     })
     const { list, total, pages } = props.resAdapter(result)
     tableData.value = list || []
@@ -99,10 +97,13 @@ const handlePageChange = async (currentPage: number = pagination.page) => {
       pagination.pageCount = pages as number
       pagination.itemCount = total as number
     }
+    loading.value = false
   } catch (err) {
+    if (!axios.isCancel(err)) {
+      loading.value = false
+    }
     console.error(err)
   }
-  loading.value = false
 }
 const handlePageSizeChnage = (pageSize: number) => {
   pagination.pageSize = pageSize
