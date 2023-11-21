@@ -47,9 +47,11 @@ function generateMenuOpts(routes: RouteRecordRaw[], parent = '/'): IMenuOption[]
     // hidden 为 true, 不显示为菜单项
     if (item.meta?.hidden) return acc
     // path 为 /, 不显示为菜单项
-    if (item.path === '/' && item.children) {
-      const tmps = generateMenuOpts(item.children, '/')
-      acc.push(...tmps)
+    if (item.path === '/') {
+      if (item.children) {
+        const tmps = generateMenuOpts(item.children, '/')
+        acc.push(...tmps)
+      }
       return acc
     }
     const path = item.path.startsWith('/') ? item.path : parent + item.path
