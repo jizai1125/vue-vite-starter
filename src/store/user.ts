@@ -100,6 +100,7 @@ const userStore = defineStore('user', {
  */
 function generateAsyncRoutes(authPaths: string[], routes: RouteRecordRaw[]) {
   // for debug
+  return routes
   const accessRoutes = filterRoutesByPath(authPaths, routes)
   console.warn('[generateAsyncRoutes]', accessRoutes)
   traverseRoutesRedirect(accessRoutes)
@@ -138,39 +139,61 @@ function filterRoutesByPath(authPaths: string[], routes: RouteRecordRaw[], paren
 }
 
 /**
- * 设置各个根路由模块重定向
+ * 检查重定向的路由存不存在，不存在则重设 redirect 或隐藏菜单
+ * 解决显示了父级菜单，但它重定向的子路由不存在导致导航到 404 页面的情况
+ * 例如：父级路由 /parent 显示为菜单，重定向到 /parent/child，但它的子路由 child 可能会因无权限被过滤掉，此时父级菜单应隐藏
  * @param routes
- * @returns
+ * @param parentPath
  */
-function traverseRoutesRedirect(routes: RouteRecordRaw[]): RouteRecordRaw[] {
+function traverseRoutesRedirect(routes: RouteRecordRaw[], parentPath?: string): RouteRecordRaw[] {
   routes.forEach((route) => {
     if (route.children) {
-      const redirect = getRedirectPath(route.children, route.path)
-      route.redirect = redirect
+      const fullPath = resolveRoutePath(route, parentPath)
+      const isExit = isRedirectExit(route.redirect as string, route.children, fullPath)
+      // console.warn('[traverseRoutesRedirect]', route.meta?.title, isExit)
+      if (route.redirect && !isExit) {
+        const subRoute = route.children.find((item) => !item.meta?.hidden)
+        // console.warn('[traverseRoutesRedirect]', '重设 redirect', route.redirect, route, subRoute)
+        if (subRoute) {
+          const redirect = resolveRoutePath(subRoute, fullPath)
+          route.redirect = redirect
+        } else if (!route.meta?.hidden) {
+          // 重定向路由不存在，隐藏当前菜单
+          route.redirect = undefined
+          if (!route.meta) route.meta = {}
+          route.meta.hidden = true
+        }
+      }
+      traverseRoutesRedirect(route.children, fullPath)
     }
   })
   return routes
 }
 
-/**
- * 获取根路径重定向路由 path
- * @param routes
- * @param parentPath
- * @returns
- */
-function getRedirectPath(routes: RouteRecordRaw[], parentPath?: string): string | undefined {
-  if (!routes.length) return
-  const route = routes[0]
-  let fullPath = route.path.startsWith('/')
+function resolveRoutePath(route: RouteRecordRaw, parentPath?: string): string {
+  const fullPath = route.path.startsWith('/')
     ? route.path
     : parentPath
     ? `${parentPath}/${route.path}`
     : route.path
-  if (route.children) {
-    const tmpPath = getRedirectPath(route.children, fullPath)
-    if (tmpPath) fullPath = tmpPath
-  }
   return fullPath
+}
+
+function isRedirectExit(redirect: string, routes: RouteRecordRaw[], parentPath: string) {
+  let flag = false
+  routes.forEach((route) => {
+    const fullPath = route.path.startsWith('/')
+      ? route.path
+      : parentPath
+      ? `${parentPath}/${route.path}`
+      : route.path
+    if (redirect === fullPath) {
+      flag = true
+    } else if (!flag && route.children) {
+      flag = isRedirectExit(redirect, route.children, fullPath)
+    }
+  })
+  return flag
 }
 
 export default userStore
